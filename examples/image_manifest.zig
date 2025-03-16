@@ -1,45 +1,3 @@
-![License](https://img.shields.io/badge/license-MIT-blue)
-![Build](https://github.com/navidys/oci-spec-zig/workflows/build/badge.svg)
-[![codecov](https://codecov.io/gh/navidys/oci-spec-zig/branch/main/graph/badge.svg)](https://codecov.io/gh/navidys/oci-spec-zig)
-![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/navidys/oci-spec-zig)
-
-# oci-spec-zig
-OCI Runtime, Image and Distribution Spec in Zig.
-
-This library provides a convenient way to interact with the specifications defined by the [Open Container Initiative (OCI)](https://opencontainers.org).
-
-- [Image Format Specification](https://github.com/opencontainers/image-spec/blob/main/spec.md)
-- [Runtime Specification](https://github.com/opencontainers/runtime-spec/blob/master/spec.md)
-- [Distribution Specification](https://github.com/opencontainers/distribution-spec/blob/main/spec.md)
-
-## Requirements
-
-Zig version >= 0.13
-
-## Build
-
-```
-$ make build
-```
-
-## Tests
-
-To run unit-tests:
-
-```shell
-$ make test
-```
-
-To generate coverage first its requires to install `kcov` utility.
-
-```shell
-$ make .install.kcov
-$ make coverage
-```
-
-## Example
-
-```shell
 const std = @import("std");
 const ocispec = @import("oci-spec");
 const image = ocispec.image;
@@ -78,7 +36,3 @@ pub fn main() !void {
 
     try bw.flush();
 }
-```
-
-## License
-Licensed under the [MIT License](https://github.com/navidys/oci-spec-zig/blob/main/LICENSE).
