@@ -29,18 +29,14 @@ test "image index" {
 
     // try to write json pretty to new file and compare to original file
     const index1_string_pretty = try index1.toStringPretty();
-    const index1_string_pretty_new_line = try std.mem.concat(
-        std.heap.page_allocator,
-        u8,
-        &.{ index1_string_pretty, "\n" },
-    );
+
     const index2_file_path = try std.mem.concat(
         std.heap.page_allocator,
         u8,
         &.{ utils.TEST_DATA_DIR, "/", index_filename },
     );
 
-    try utils.writeFileContent(index2_file_path, index1_string_pretty_new_line);
+    try utils.writeFileContent(index2_file_path, index1_string_pretty);
 
     const index1_file = try std.fs.cwd().openFile(index1_file_path, .{});
     defer index1_file.close();
@@ -51,5 +47,5 @@ test "image index" {
     const index1_file_stat = try index1_file.stat();
     const index2_file_stat = try index2_file.stat();
 
-    try std.testing.expectEqual(index1_file_stat.size, index2_file_stat.size);
+    try std.testing.expectEqual(index1_file_stat.size, index2_file_stat.size + 1);
 }

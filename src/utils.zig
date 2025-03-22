@@ -16,11 +16,17 @@ pub fn readFileContent(file_path: []const u8, allocator: std.mem.Allocator) ![]u
 }
 
 pub fn writeFileContent(file_path: []const u8, content: []const u8) !void {
+    const content_newline = try std.mem.concat(
+        std.heap.page_allocator,
+        u8,
+        &.{ content, "\n" },
+    );
+
     const file = try std.fs.cwd().createFile(file_path, fs.File.CreateFlags{ .read = false });
 
     defer file.close();
 
-    _ = try file.writeAll(content);
+    _ = try file.writeAll(content_newline);
 }
 
 pub fn toJsonString(value: anytype, pretty: bool) ![]const u8 {

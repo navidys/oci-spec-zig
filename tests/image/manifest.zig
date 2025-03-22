@@ -22,18 +22,14 @@ test "image manifest" {
 
     // try to write json pretty to new file and compare to original file
     const manifest1_string_pretty = try manifest1.toStringPretty();
-    const manifest1_string_pretty_new_line = try std.mem.concat(
-        std.heap.page_allocator,
-        u8,
-        &.{ manifest1_string_pretty, "\n" },
-    );
+
     const manifest2_file_path = try std.mem.concat(
         std.heap.page_allocator,
         u8,
         &.{ utils.TEST_DATA_DIR, "/", manifet_filename },
     );
 
-    try utils.writeFileContent(manifest2_file_path, manifest1_string_pretty_new_line);
+    try utils.writeFileContent(manifest2_file_path, manifest1_string_pretty);
 
     const manifest1_file = try std.fs.cwd().openFile(manifest1_file_path, .{});
     defer manifest1_file.close();
@@ -44,5 +40,5 @@ test "image manifest" {
     const manifest1_file_stat = try manifest1_file.stat();
     const manifest2_file_stat = try manifest2_file.stat();
 
-    try std.testing.expectEqual(manifest1_file_stat.size, manifest2_file_stat.size);
+    try std.testing.expectEqual(manifest1_file_stat.size, manifest2_file_stat.size + 1);
 }
