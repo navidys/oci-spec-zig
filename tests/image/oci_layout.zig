@@ -27,18 +27,14 @@ test "image oci layout" {
 
     // try to write json pretty to new file and compare to original file
     const oci_layout1_string_pretty = try oci_layout1.toStringPretty();
-    const oci_layout1_string_pretty_new_line = try std.mem.concat(
-        std.heap.page_allocator,
-        u8,
-        &.{ oci_layout1_string_pretty, "\n" },
-    );
+
     const oci_layout2_file_path = try std.mem.concat(
         std.heap.page_allocator,
         u8,
         &.{ utils.TEST_DATA_DIR, "/", oci_layout_filename },
     );
 
-    try utils.writeFileContent(oci_layout2_file_path, oci_layout1_string_pretty_new_line);
+    try utils.writeFileContent(oci_layout2_file_path, oci_layout1_string_pretty);
 
     const oci_layout1_file = try std.fs.cwd().openFile(oci_layout1_file_path, .{});
     defer oci_layout1_file.close();
@@ -49,5 +45,5 @@ test "image oci layout" {
     const oci_layout1_file_stat = try oci_layout1_file.stat();
     const oci_layout2_file_stat = try oci_layout2_file.stat();
 
-    try std.testing.expectEqual(oci_layout1_file_stat.size, oci_layout2_file_stat.size);
+    try std.testing.expectEqual(oci_layout1_file_stat.size, oci_layout2_file_stat.size + 1);
 }

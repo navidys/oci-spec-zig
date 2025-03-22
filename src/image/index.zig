@@ -72,24 +72,14 @@ pub const Index = struct {
     /// Attempts to write the image index to a file as JSON. If the file already exists, it
     pub fn toFile(self: @This(), file_path: []const u8) !void {
         const content = try self.toString();
-        const content_newline = try std.mem.concat(
-            std.heap.page_allocator,
-            u8,
-            &.{ content, "\n" },
-        );
 
-        try utils.writeFileContent(file_path, content_newline);
+        try utils.writeFileContent(file_path, content);
     }
 
     /// Attempts to write the image index to a file as pretty printed JSON. If the file already exists, it
     pub fn toFilePretty(self: @This(), file_path: []const u8) !void {
         const content = try self.toStringPretty();
-        const content_newline = try std.mem.concat(
-            std.heap.page_allocator,
-            u8,
-            &.{ content, "\n" },
-        );
 
-        try utils.writeFileContent(file_path, content_newline);
+        try utils.writeFileContent(file_path, content);
     }
 };
