@@ -6,9 +6,6 @@ pub fn main() !void {
     const file_path = "./tests/fixtures/spec.json";
     const spec = try runtime.Spec.initFromFile(file_path);
 
-    _ = try runtime.defaultMountPoints();
-    _ = try runtime.defaultRootlessMountPoints();
-
     const config_content = try spec.toStringPretty();
 
     const stdout_file = std.io.getStdOut().writer();
