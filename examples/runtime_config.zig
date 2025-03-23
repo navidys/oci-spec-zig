@@ -5,6 +5,7 @@ const runtime = ocispec.runtime;
 pub fn main() !void {
     const file_path = "./tests/fixtures/spec.json";
     const spec = try runtime.Spec.initFromFile(file_path);
+
     const config_content = try spec.toStringPretty();
 
     const stdout_file = std.io.getStdOut().writer();
