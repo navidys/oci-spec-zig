@@ -10,6 +10,7 @@ const hooks = @import("hooks.zig");
 const vm = @import("vm.zig");
 const linux = @import("linux.zig");
 const solaris = @import("solaris.zig");
+const zod = @import("zos.zig");
 
 pub const Spec = spec.Spec;
 pub const Process = process.Process;

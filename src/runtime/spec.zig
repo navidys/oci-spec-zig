@@ -7,6 +7,7 @@ const hooks = @import("hooks.zig");
 const vm = @import("vm.zig");
 const linux = @import("linux.zig");
 const solaris = @import("solaris.zig");
+const zos = @import("zos.zig");
 
 /// Base configuration for the container.
 pub const Spec = struct {
@@ -81,12 +82,16 @@ pub const Spec = struct {
     /// Values MUST be strings. Values MAY be an empty string.
     annotations: ?std.json.ArrayHashMap([]const u8) = null,
 
-    /// Linux is platform-specific configuration for Linux based containers.
+    /// linux is platform-specific configuration for Linux based containers.
     linux: ?linux.Linux = null,
 
-    /// Solaris is platform-specific configuration for Solaris based
+    /// solaris is platform-specific configuration for Solaris based
     /// containers.
     solaris: ?solaris.Solaris = null,
+
+    /// zos is platform-specific configuration for Solaris based
+    /// containers.
+    zos: ?zos.Zos = null,
 
     /// VM specifies configuration for Virtual Machine based containers.
     vm: ?vm.VM = null,
