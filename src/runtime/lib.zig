@@ -9,6 +9,7 @@ const scheduler = @import("scheduler.zig");
 const hooks = @import("hooks.zig");
 const vm = @import("vm.zig");
 const linux = @import("linux.zig");
+const solaris = @import("solaris.zig");
 
 pub const Spec = spec.Spec;
 pub const Process = process.Process;
@@ -22,6 +23,9 @@ pub const VM = vm.VM;
 pub const VMKernel = vm.VMKernel;
 pub const VMImage = vm.VMImage;
 pub const VMHypervisor = vm.VMHypervisor;
+pub const SolarisAnet = solaris.SolarisAnet;
+pub const SolarisCappedCPU = solaris.SolarisCappedCPU;
+pub const SolarisCappedMemory = solaris.SolarisCappedMemory;
 pub const Linux = linux.Linux;
 pub const LinuxResources = linux.LinuxResources;
 pub const LinuxNetwork = linux.LinuxNetwork;

@@ -3,7 +3,7 @@ const ocispec = @import("oci-spec");
 const runtime = ocispec.runtime;
 
 pub fn main() !void {
-    const file_path = "./tests/fixtures/spec.json";
+    const file_path = "./tests/fixtures/runtime_spec.json";
     const spec = try runtime.Spec.initFromFile(file_path);
 
     const config_content = try spec.toStringPretty();
