@@ -6,6 +6,7 @@ const process = @import("process.zig");
 const hooks = @import("hooks.zig");
 const vm = @import("vm.zig");
 const linux = @import("linux.zig");
+const solaris = @import("solaris.zig");
 
 /// Base configuration for the container.
 pub const Spec = struct {
@@ -82,6 +83,10 @@ pub const Spec = struct {
 
     /// Linux is platform-specific configuration for Linux based containers.
     linux: ?linux.Linux = null,
+
+    /// Solaris is platform-specific configuration for Solaris based
+    /// containers.
+    solaris: ?solaris.Solaris = null,
 
     /// VM specifies configuration for Virtual Machine based containers.
     vm: ?vm.VM = null,
