@@ -10,7 +10,7 @@ const hooks = @import("hooks.zig");
 const vm = @import("vm.zig");
 const linux = @import("linux.zig");
 const solaris = @import("solaris.zig");
-const zod = @import("zos.zig");
+const zos = @import("zos.zig");
 
 pub const Spec = spec.Spec;
 pub const Process = process.Process;
@@ -24,6 +24,9 @@ pub const VM = vm.VM;
 pub const VMKernel = vm.VMKernel;
 pub const VMImage = vm.VMImage;
 pub const VMHypervisor = vm.VMHypervisor;
+pub const Zos = zos.Zos;
+pub const ZosNamespace = zos.ZosNamespace;
+pub const ZosNamespaceType = zos.ZosNamespaceType;
 pub const SolarisAnet = solaris.SolarisAnet;
 pub const SolarisCappedCPU = solaris.SolarisCappedCPU;
 pub const SolarisCappedMemory = solaris.SolarisCappedMemory;
@@ -67,7 +70,7 @@ pub const Mount = define.Mount;
 pub const ExecCPUAffinity = define.ExecCPUAffinity;
 pub const ConsoleSize = define.ConsoleSize;
 pub const User = define.User;
-pub const Version = version.VERSION;
+pub const VERSION = version.VERSION;
 
 pub fn defaultMountPoints() ![]define.Mount {
     return try define.getDefaultMounts();

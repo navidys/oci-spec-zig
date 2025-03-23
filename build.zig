@@ -39,6 +39,7 @@ pub fn build(b: *std.Build) void {
         "image_oci_layout",
         "image_manifest",
         "image_index",
+        "artifact_manifest",
         "runtime_config",
     }) |example_name| {
         const example = b.addExecutable(.{
