@@ -1,5 +1,5 @@
 const std = @import("std");
-const ocispec = @import("oci-spec");
+const ocispec = @import("ocispec");
 const runtime = ocispec.runtime;
 
 pub fn main() !void {

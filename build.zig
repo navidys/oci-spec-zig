@@ -9,7 +9,7 @@ pub fn build(b: *std.Build) void {
 
     // add library
     const lib = b.addStaticLibrary(.{
-        .name = "oci-spec",
+        .name = "ocispec",
         // In this case the main source file is merely a path, however, in more
         // complicated build scripts, this could be a generated file.
         .root_source_file = b.path("src/lib.zig"),
@@ -20,7 +20,7 @@ pub fn build(b: *std.Build) void {
 
     b.installArtifact(lib);
 
-    const oci_spec_module = b.addModule("oci-spec", .{
+    const oci_spec_module = b.addModule("ocispec", .{
         .root_source_file = b.path("src/lib.zig"),
     });
 
@@ -49,7 +49,7 @@ pub fn build(b: *std.Build) void {
             .optimize = optimize,
         });
 
-        example.root_module.addImport("oci-spec", oci_spec_module);
+        example.root_module.addImport("ocispec", oci_spec_module);
         b.installArtifact(example);
     }
 
@@ -61,7 +61,7 @@ pub fn build(b: *std.Build) void {
         .target = target,
         .optimize = optimize,
     });
-    lib_unit_tests.root_module.addImport("oci-spec", oci_spec_module);
+    lib_unit_tests.root_module.addImport("ocispec", oci_spec_module);
 
     const run_lib_unit_tests = b.addRunArtifact(lib_unit_tests);
 
@@ -97,7 +97,7 @@ fn checkVersion() bool {
         return false;
     }
 
-    const needed_version = std.SemanticVersion.parse("0.13.0") catch unreachable;
+    const needed_version = std.SemanticVersion.parse("0.14.0") catch unreachable;
     const version = builtin.zig_version;
     const order = version.order(needed_version);
     return order != .lt;

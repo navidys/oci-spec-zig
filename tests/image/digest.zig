@@ -1,5 +1,5 @@
 const std = @import("std");
-const ocispec = @import("oci-spec");
+const ocispec = @import("ocispec");
 const image = ocispec.image;
 
 test "image digest" {

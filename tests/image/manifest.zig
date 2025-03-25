@@ -1,6 +1,6 @@
 const std = @import("std");
 const utils = @import("../utils.zig");
-const ocispec = @import("oci-spec");
+const ocispec = @import("ocispec");
 const image = ocispec.image;
 
 test "image manifest" {

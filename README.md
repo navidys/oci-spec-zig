@@ -14,7 +14,7 @@ This library provides a convenient way to interact with the specifications defin
 
 ## Requirements
 
-Zig version >= 0.13
+Zig version >= 0.14.0
 
 ## Build
 
@@ -41,7 +41,7 @@ $ make coverage
 
 ```shell
 const std = @import("std");
-const ocispec = @import("oci-spec");
+const ocispec = @import("ocispec");
 const image = ocispec.image;
 
 pub fn main() !void {
