@@ -2,6 +2,7 @@
 ![Build](https://github.com/navidys/oci-spec-zig/workflows/build/badge.svg)
 [![codecov](https://codecov.io/gh/navidys/oci-spec-zig/branch/main/graph/badge.svg)](https://codecov.io/gh/navidys/oci-spec-zig)
 ![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/navidys/oci-spec-zig)
+[![awesome](https://awesome.re/mentioned-badge.svg)](https://github.com/zigcc/awesome-zig)
 
 # oci-spec-zig
 OCI Runtime, Image and Distribution Spec in Zig.
