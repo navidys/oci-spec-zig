@@ -1,8 +1,16 @@
 const std = @import("std");
 
+const MIN_ZIG_VERSION = "0.14.1";
+
 pub fn build(b: *std.Build) void {
-    if (comptime !checkVersion())
-        @compileError("Please! Update zig toolchain >= 0.13!");
+    if (comptime !checkVersion()) {
+        var gpa_state = std.heap.GeneralPurposeAllocator(.{}){};
+        const gpa = gpa_state.allocator();
+        defer _ = gpa_state.deinit();
+
+        const msg = std.fmt.allocPrint(gpa, "Please! Update zig toolchain >= {s}!", .{MIN_ZIG_VERSION});
+        @compileError(msg);
+    }
 
     const target = b.standardTargetOptions(.{});
     const optimize = b.standardOptimizeOption(.{});
@@ -97,7 +105,7 @@ fn checkVersion() bool {
         return false;
     }
 
-    const needed_version = std.SemanticVersion.parse("0.14.0") catch unreachable;
+    const needed_version = std.SemanticVersion.parse(MIN_ZIG_VERSION) catch unreachable;
     const version = builtin.zig_version;
     const order = version.order(needed_version);
     return order != .lt;

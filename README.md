@@ -15,7 +15,7 @@ This library provides a convenient way to interact with the specifications defin
 
 ## Requirements
 
-Zig version >= 0.14.0
+Zig version >= 0.14.1
 
 ## Build
 
