@@ -3,14 +3,8 @@ const std = @import("std");
 const MIN_ZIG_VERSION = "0.14.1";
 
 pub fn build(b: *std.Build) void {
-    if (comptime !checkVersion()) {
-        var gpa_state = std.heap.GeneralPurposeAllocator(.{}){};
-        const gpa = gpa_state.allocator();
-        defer _ = gpa_state.deinit();
-
-        const msg = std.fmt.allocPrint(gpa, "Please! Update zig toolchain >= {s}!", .{MIN_ZIG_VERSION});
-        @compileError(msg);
-    }
+    if (comptime !checkVersion())
+        @compileError("Please! Update zig toolchain >= 0.14.1!");
 
     const target = b.standardTargetOptions(.{});
     const optimize = b.standardOptimizeOption(.{});

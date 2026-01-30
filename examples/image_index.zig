@@ -3,6 +3,11 @@ const ocispec = @import("ocispec");
 const image = ocispec.image;
 
 pub fn main() !void {
+    var arena = std.heap.ArenaAllocator.init(std.heap.page_allocator);
+    defer arena.deinit();
+
+    const allocator = arena.allocator();
+
     const manifest_platform = image.Platform{
         .architecture = image.Arch.PowerPC64,
         .os = image.OS.Linux,
@@ -12,10 +17,10 @@ pub fn main() !void {
         .mediaType = image.MediaType.ImageManifest,
         .size = 32654,
         .platform = manifest_platform,
-        .digest = try image.Digest.initFromString("sha256:9834876dcfb05cb167a5c24953eba58c4ac89b1adf57f28f2f9d09af107ee8f0"),
+        .digest = try image.Digest.initFromString(allocator, "sha256:9834876dcfb05cb167a5c24953eba58c4ac89b1adf57f28f2f9d09af107ee8f0"),
     };
 
-    var manifests = std.ArrayList(image.Descriptor).init(std.heap.page_allocator);
+    var manifests = std.ArrayList(image.Descriptor).init(allocator);
 
     try manifests.append(index_manifest);
 
@@ -26,7 +31,7 @@ pub fn main() !void {
         .manifests = image_manifests,
     };
 
-    const image_index_content = try image_index.toStringPretty();
+    const image_index_content = try image_index.toStringPretty(allocator);
 
     const stdout_file = std.io.getStdOut().writer();
     var bw = std.io.bufferedWriter(stdout_file);

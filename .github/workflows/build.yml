@@ -4,9 +4,6 @@ on:
     branches: [ main ]
   pull_request:
 
-env:
-  ZIG_VERSION: 0.14.0
-
 jobs:
   pre-commit:
     runs-on: ubuntu-latest
@@ -28,9 +25,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: mlugg/setup-zig@v1
+      - uses: mlugg/setup-zig@v2
         with:
-          version: $ZIG_VERSION
+          version: 0.14.1
       - run: |
           make build
 
@@ -38,9 +35,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: mlugg/setup-zig@v1
+      - uses: mlugg/setup-zig@v2
         with:
-          version: $ZIG_VERSION
+          version: 0.14.1
       - run: |
           make fmt
 
@@ -48,9 +45,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: mlugg/setup-zig@v1
+      - uses: mlugg/setup-zig@v2
         with:
-          version: $ZIG_VERSION
+          version: 0.14.1
       - run: |
           sudo apt-get install binutils-dev libssl-dev libcurl4-openssl-dev libelf-dev libstdc++-12-dev zlib1g-dev libdw-dev libiberty-dev git
           git clone https://github.com/SimonKagstrom/kcov.git

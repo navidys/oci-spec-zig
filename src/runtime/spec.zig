@@ -118,8 +118,8 @@ pub const Spec = struct {
     }
 
     /// Attempts to write an image configuration to a string as pretty printed JSON.
-    pub fn toStringPretty(self: @This()) ![]const u8 {
-        const conf = try utils.toJsonString(self, true);
+    pub fn toStringPretty(self: @This(), allocator: Allocator) ![]const u8 {
+        const conf = try utils.toJsonString(allocator, self, true);
 
         return conf;
     }
