@@ -17,25 +17,12 @@ test "image config" {
     );
     const config1 = try image.Configuration.initFromFile(allocator, config1_file_path);
 
-    try std.testing.expect(std.mem.eql(
-        u8,
-        config1.created,
-        "2015-10-31T22:22:56.015925234Z",
-    ) == true);
-
-    try std.testing.expect(std.mem.eql(
-        u8,
-        config1.author.?,
-        "Alyssa P. Hacker <alyspdev@example.com>",
-    ) == true);
-
+    try std.testing.expectEqualSlices(u8, config1.created, "2015-10-31T22:22:56.015925234Z");
+    try std.testing.expectEqualSlices(u8, config1.author.?, "Alyssa P. Hacker <alyspdev@example.com>");
     try std.testing.expectEqual(config1.architecture, image.Arch.Amd64);
     try std.testing.expectEqual(config1.os, image.OS.Linux);
-    try std.testing.expect(std.mem.eql(
-        u8,
-        config1.config.?.User.?,
-        "alice",
-    ) == true);
+    try std.testing.expectEqualSlices(u8, config1.config.?.User.?, "alice");
+
     // try to write json pretty to new file and compare to original file
     const config1_string_pretty = try config1.toStringPretty(allocator);
 

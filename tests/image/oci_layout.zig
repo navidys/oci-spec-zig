@@ -18,17 +18,8 @@ test "image oci layout" {
     const oci_layout1 = try image.OciLayout.initFromFile(allocator, oci_layout1_file_path);
     const oci_layout1_string = try oci_layout1.toString(allocator);
 
-    try std.testing.expect(std.mem.eql(
-        u8,
-        oci_layout1.imageLayoutVersion,
-        "1.0.0",
-    ) == true);
-
-    try std.testing.expect(std.mem.eql(
-        u8,
-        oci_layout1_string,
-        "{\"imageLayoutVersion\":\"1.0.0\"}",
-    ) == true);
+    try std.testing.expectEqualSlices(u8, oci_layout1.imageLayoutVersion, "1.0.0");
+    try std.testing.expectEqualSlices(u8, oci_layout1_string, "{\"imageLayoutVersion\":\"1.0.0\"}");
 
     // try to write json pretty to new file and compare to original file
     const oci_layout1_string_pretty = try oci_layout1.toStringPretty(allocator);

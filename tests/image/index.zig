@@ -24,11 +24,7 @@ test "image index" {
     try std.testing.expectEqual(index1_manifest[0].mediaType, image.MediaType.ImageManifest);
     try std.testing.expectEqual(index1_manifest[0].size, 7143);
     try std.testing.expectEqual(index1_manifest[0].digest.algorithm, image.DigestAlgorithm.Sha256);
-    try std.testing.expect(std.mem.eql(
-        u8,
-        index1_manifest[0].digest.value,
-        "e692418e4cbaf90ca69d05a66403747baa33ee08806650b51fab815ad7fc331f",
-    ) == true);
+    try std.testing.expectEqualSlices(u8, index1_manifest[0].digest.value, "e692418e4cbaf90ca69d05a66403747baa33ee08806650b51fab815ad7fc331f");
     try std.testing.expectEqual(index1_manifest[0].platform.?.architecture, image.Arch.PowerPC64le);
     try std.testing.expectEqual(index1_manifest[0].platform.?.os, image.OS.Linux);
 
