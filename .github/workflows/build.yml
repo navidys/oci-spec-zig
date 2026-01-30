@@ -5,7 +5,7 @@ on:
   pull_request:
 
 env:
-  ZIG_VERSION: 0.14.1
+  ZIG_VERSION: 0.14.0
 
 jobs:
   pre-commit:
