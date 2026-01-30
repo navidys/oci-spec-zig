@@ -1,8 +1,9 @@
 const std = @import("std");
+const Allocator = std.mem.Allocator;
 const fs = std.fs;
 
 /// reads content of a given file path
-pub fn readFileContent(file_path: []const u8, allocator: std.mem.Allocator) ![]u8 {
+pub fn readFileContent(allocator: Allocator, file_path: []const u8) ![]u8 {
     const file = try std.fs.cwd().openFile(file_path, fs.File.OpenFlags{ .mode = .read_only });
     defer file.close();
 
@@ -15,9 +16,9 @@ pub fn readFileContent(file_path: []const u8, allocator: std.mem.Allocator) ![]u
     return buffer;
 }
 
-pub fn writeFileContent(file_path: []const u8, content: []const u8) !void {
+pub fn writeFileContent(allocator: Allocator, file_path: []const u8, content: []const u8) !void {
     const content_newline = try std.mem.concat(
-        std.heap.page_allocator,
+        allocator,
         u8,
         &.{ content, "\n" },
     );
@@ -29,9 +30,7 @@ pub fn writeFileContent(file_path: []const u8, content: []const u8) !void {
     _ = try file.writeAll(content_newline);
 }
 
-pub fn toJsonString(value: anytype, pretty: bool) ![]const u8 {
-    const allocator = std.heap.page_allocator;
-
+pub fn toJsonString(allocator: Allocator, value: anytype, pretty: bool) ![]const u8 {
     const jsonValue = switch (pretty) {
         true => try std.json.stringifyAlloc(
             allocator,

@@ -4,13 +4,18 @@ const ocispec = @import("ocispec");
 const image = ocispec.image;
 
 test "image index" {
+    var arena = std.heap.ArenaAllocator.init(std.heap.page_allocator);
+    defer arena.deinit();
+
+    const allocator = arena.allocator();
+
     const index_filename = "index.json";
     const index1_file_path = try std.mem.concat(
-        std.heap.page_allocator,
+        allocator,
         u8,
         &.{ "./tests/fixtures/", index_filename },
     );
-    const index1 = try image.Index.initFromFile(index1_file_path);
+    const index1 = try image.Index.initFromFile(allocator, index1_file_path);
     const index1_manifest = index1.manifests;
 
     try std.testing.expectEqual(index1.schemaVersion, 2);
@@ -28,10 +33,10 @@ test "image index" {
     try std.testing.expectEqual(index1_manifest[0].platform.?.os, image.OS.Linux);
 
     // try to write json pretty to new file and compare to original file
-    const index1_string_pretty = try index1.toStringPretty();
+    const index1_string_pretty = try index1.toStringPretty(allocator);
 
     const index2_file_path = try std.mem.concat(
-        std.heap.page_allocator,
+        allocator,
         u8,
         &.{ utils.TEST_DATA_DIR, "/", index_filename },
     );

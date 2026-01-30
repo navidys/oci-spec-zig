@@ -1,4 +1,5 @@
 const std = @import("std");
+const Allocator = std.mem.Allocator;
 
 /// Root contains information about the container's root filesystem on the
 /// host.
@@ -73,10 +74,10 @@ pub const ExecCPUAffinity = struct {
     final: ?[]const u8 = null,
 };
 
-pub fn getDefaultRootlessMounts() ![]Mount {
-    var mounts = std.ArrayList(Mount).init(std.heap.page_allocator);
+pub fn getDefaultRootlessMounts(allocator: Allocator) ![]Mount {
+    var mounts = std.ArrayList(Mount).init(allocator);
 
-    var pts_opts = std.ArrayList([]const u8).init(std.heap.page_allocator);
+    var pts_opts = std.ArrayList([]const u8).init(allocator);
     try pts_opts.append("nosuid");
     try pts_opts.append("noexec");
     try pts_opts.append("newinstance");
@@ -89,7 +90,7 @@ pub fn getDefaultRootlessMounts() ![]Mount {
         .options = try pts_opts.toOwnedSlice(),
     });
 
-    var sys_opts = std.ArrayList([]const u8).init(std.heap.page_allocator);
+    var sys_opts = std.ArrayList([]const u8).init(allocator);
     try sys_opts.append("nosuid");
     try sys_opts.append("noexec");
     try sys_opts.append("nodev");
@@ -105,15 +106,15 @@ pub fn getDefaultRootlessMounts() ![]Mount {
     return mounts.toOwnedSlice();
 }
 
-pub fn getDefaultMounts() ![]Mount {
-    var mounts = std.ArrayList(Mount).init(std.heap.page_allocator);
+pub fn getDefaultMounts(allocator: Allocator) ![]Mount {
+    var mounts = std.ArrayList(Mount).init(allocator);
     try mounts.append(Mount{
         .destination = "/proc",
         .type = "proc",
         .source = "proc",
     });
 
-    var dev_opts = std.ArrayList([]const u8).init(std.heap.page_allocator);
+    var dev_opts = std.ArrayList([]const u8).init(allocator);
     try dev_opts.append("nosuid");
     try dev_opts.append("strictatime");
     try dev_opts.append("mode=755");
@@ -125,7 +126,7 @@ pub fn getDefaultMounts() ![]Mount {
         .options = try dev_opts.toOwnedSlice(),
     });
 
-    var pts_opts = std.ArrayList([]const u8).init(std.heap.page_allocator);
+    var pts_opts = std.ArrayList([]const u8).init(allocator);
     try pts_opts.append("nosuid");
     try pts_opts.append("noexec");
     try pts_opts.append("newinstance");
@@ -139,7 +140,7 @@ pub fn getDefaultMounts() ![]Mount {
         .options = try pts_opts.toOwnedSlice(),
     });
 
-    var shm_opts = std.ArrayList([]const u8).init(std.heap.page_allocator);
+    var shm_opts = std.ArrayList([]const u8).init(allocator);
     try shm_opts.append("nosuid");
     try shm_opts.append("noexec");
     try shm_opts.append("nodev");
@@ -152,7 +153,7 @@ pub fn getDefaultMounts() ![]Mount {
         .options = try shm_opts.toOwnedSlice(),
     });
 
-    var mqueue_opts = std.ArrayList([]const u8).init(std.heap.page_allocator);
+    var mqueue_opts = std.ArrayList([]const u8).init(allocator);
     try mqueue_opts.append("nosuid");
     try mqueue_opts.append("noexec");
     try mqueue_opts.append("nodev");
@@ -163,7 +164,7 @@ pub fn getDefaultMounts() ![]Mount {
         .options = try mqueue_opts.toOwnedSlice(),
     });
 
-    var sys_opts = std.ArrayList([]const u8).init(std.heap.page_allocator);
+    var sys_opts = std.ArrayList([]const u8).init(allocator);
     try sys_opts.append("nosuid");
     try sys_opts.append("noexec");
     try sys_opts.append("nodev");
@@ -175,7 +176,7 @@ pub fn getDefaultMounts() ![]Mount {
         .options = try sys_opts.toOwnedSlice(),
     });
 
-    var cgroup_opts = std.ArrayList([]const u8).init(std.heap.page_allocator);
+    var cgroup_opts = std.ArrayList([]const u8).init(allocator);
     try cgroup_opts.append("nosuid");
     try cgroup_opts.append("noexec");
     try cgroup_opts.append("nodev");

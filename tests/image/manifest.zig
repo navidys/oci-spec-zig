@@ -4,13 +4,18 @@ const ocispec = @import("ocispec");
 const image = ocispec.image;
 
 test "image manifest" {
+    var arena = std.heap.ArenaAllocator.init(std.heap.page_allocator);
+    defer arena.deinit();
+
+    const allocator = arena.allocator();
+
     const manifet_filename = "manifest.json";
     const manifest1_file_path = try std.mem.concat(
-        std.heap.page_allocator,
+        allocator,
         u8,
         &.{ "./tests/fixtures/", manifet_filename },
     );
-    const manifest1 = try image.Manifest.initFromFile(manifest1_file_path);
+    const manifest1 = try image.Manifest.initFromFile(allocator, manifest1_file_path);
     const manifest1_subject = manifest1.subject;
 
     try std.testing.expectEqual(manifest1.schemaVersion, 2);
@@ -21,10 +26,10 @@ test "image manifest" {
     try std.testing.expect(manifest1_subject.?.size == 7682);
 
     // try to write json pretty to new file and compare to original file
-    const manifest1_string_pretty = try manifest1.toStringPretty();
+    const manifest1_string_pretty = try manifest1.toStringPretty(allocator);
 
     const manifest2_file_path = try std.mem.concat(
-        std.heap.page_allocator,
+        allocator,
         u8,
         &.{ utils.TEST_DATA_DIR, "/", manifet_filename },
     );

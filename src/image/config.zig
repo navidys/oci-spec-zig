@@ -1,6 +1,7 @@
 const std = @import("std");
 const utils = @import("../utils.zig");
 const define = @import("define.zig");
+const Allocator = std.mem.Allocator;
 
 /// The image configuration is associated with an image and describes some
 /// basic information about the image such as date created, author, as
@@ -62,11 +63,8 @@ pub const ImageConfiguration = struct {
     history: ?[]const History = null,
 
     /// Attempts to load the image configuration from file.
-    pub fn initFromFile(file_path: []const u8) !ImageConfiguration {
-        const allocator = std.heap.page_allocator;
-        const content = try utils.readFileContent(file_path, allocator);
-
-        defer allocator.free(content);
+    pub fn initFromFile(allocator: Allocator, file_path: []const u8) !ImageConfiguration {
+        const content = try utils.readFileContent(allocator, file_path);
 
         const parsed = try std.json.parseFromSlice(
             ImageConfiguration,
@@ -79,31 +77,31 @@ pub const ImageConfiguration = struct {
     }
 
     /// Attempts to write the image configuration to a string as JSON.
-    pub fn toString(self: @This()) ![]const u8 {
-        const conf = try utils.toJsonString(self, false);
+    pub fn toString(self: @This(), allocator: Allocator) ![]const u8 {
+        const conf = try utils.toJsonString(allocator, self, false);
 
         return conf;
     }
 
     /// Attempts to write the image configuration to a string as pretty printed JSON.
-    pub fn toStringPretty(self: @This()) ![]const u8 {
-        const conf = try utils.toJsonString(self, true);
+    pub fn toStringPretty(self: @This(), allocator: Allocator) ![]const u8 {
+        const conf = try utils.toJsonString(allocator, self, true);
 
         return conf;
     }
 
     /// Attempts to write the image configuration to a file as JSON. If the file already exists, it
-    pub fn toFile(self: @This(), file_path: []const u8) !void {
-        const content = try self.toString();
+    pub fn toFile(self: @This(), allocator: Allocator, file_path: []const u8) !void {
+        const content = try self.toString(allocator);
 
-        try utils.writeFileContent(file_path, content);
+        try utils.writeFileContent(allocator, file_path, content);
     }
 
     /// Attempts to write the image configuration to a file as pretty printed JSON. If the file already exists, it
-    pub fn toFilePretty(self: @This(), file_path: []const u8) !void {
-        const content = try self.toStringPretty();
+    pub fn toFilePretty(self: @This(), allocator: Allocator, file_path: []const u8) !void {
+        const content = try self.toStringPretty(allocator);
 
-        try utils.writeFileContent(file_path, content);
+        try utils.writeFileContent(allocator, file_path, content);
     }
 };
 

@@ -2,6 +2,7 @@ const std = @import("std");
 const utils = @import("../utils.zig");
 const descriptor = @import("descriptor.zig");
 const define = @import("define.zig");
+const Allocator = std.mem.Allocator;
 
 /// Unlike the image index, which contains information about a set of images
 /// that can span a variety of architectures and operating systems, an image
@@ -57,11 +58,8 @@ pub const Manifest = struct {
     annotations: ?std.json.ArrayHashMap([]const u8) = null,
 
     /// Attempts to load the image manifest from file.
-    pub fn initFromFile(file_path: []const u8) !Manifest {
-        const allocator = std.heap.page_allocator;
-        const content = try utils.readFileContent(file_path, allocator);
-
-        defer allocator.free(content);
+    pub fn initFromFile(allocator: Allocator, file_path: []const u8) !Manifest {
+        const content = try utils.readFileContent(allocator, file_path);
 
         const parsed = try std.json.parseFromSlice(
             Manifest,
@@ -74,30 +72,30 @@ pub const Manifest = struct {
     }
 
     /// Attempts to write the image manifest to a string as JSON.
-    pub fn toString(self: @This()) ![]const u8 {
-        const conf = try utils.toJsonString(self, false);
+    pub fn toString(self: @This(), allocator: Allocator) ![]const u8 {
+        const conf = try utils.toJsonString(allocator, self, false);
 
         return conf;
     }
 
     /// Attempts to write the image manifest to a string as pretty printed JSON.
-    pub fn toStringPretty(self: @This()) ![]const u8 {
-        const conf = try utils.toJsonString(self, true);
+    pub fn toStringPretty(self: @This(), allocator: Allocator) ![]const u8 {
+        const conf = try utils.toJsonString(allocator, self, true);
 
         return conf;
     }
 
     /// Attempts to write the image manifest to a file as JSON. If the file already exists, it
-    pub fn toFile(self: @This(), file_path: []const u8) !void {
-        const content = try self.toString();
+    pub fn toFile(self: @This(), allocator: Allocator, file_path: []const u8) !void {
+        const content = try self.toString(allocator);
 
-        try utils.writeFileContent(file_path, content);
+        try utils.writeFileContent(allocator, file_path, content);
     }
 
     /// Attempts to write the image manifest to a file as pretty printed JSON. If the file already exists, it
-    pub fn toFilePretty(self: @This(), file_path: []const u8) !void {
-        const content = try self.toStringPretty();
+    pub fn toFilePretty(self: @This(), allocator: Allocator, file_path: []const u8) !void {
+        const content = try self.toStringPretty(allocator);
 
-        try utils.writeFileContent(file_path, content);
+        try utils.writeFileContent(allocator, file_path, content);
     }
 };

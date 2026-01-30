@@ -1,5 +1,6 @@
 const std = @import("std");
 const errors = @import("errors.zig");
+const Allocator = std.mem.Allocator;
 
 /// A digest algorithm; at the current time only SHA-256
 /// is widely used and supported in the ecosystem. Other
@@ -37,9 +38,7 @@ pub const Digest = struct {
         };
     }
 
-    pub fn initFromString(digest: []const u8) !Digest {
-        const allocator = std.heap.page_allocator;
-
+    pub fn initFromString(allocator: Allocator, digest: []const u8) !Digest {
         var digestR = Digest{
             .algorithm = DigestAlgorithm.Sha256,
             .value = "a",
@@ -73,11 +72,11 @@ pub const Digest = struct {
         return digestR;
     }
 
-    pub fn toString(self: @This()) ![]const u8 {
+    pub fn toString(self: @This(), allocator: Allocator) ![]const u8 {
         const algo = self.algorithm.toString();
         const value = self.value;
         const digest_string = try std.mem.concat(
-            std.heap.page_allocator,
+            allocator,
             u8,
             &.{ algo, ":", value },
         );
@@ -97,7 +96,7 @@ pub const Digest = struct {
         try jws.print("\"{s}:{s}\"", .{ algo, self.value });
     }
 
-    pub fn jsonParse(allocator: std.mem.Allocator, source: anytype, _: std.json.ParseOptions) !Digest {
+    pub fn jsonParse(allocator: Allocator, source: anytype, _: std.json.ParseOptions) !Digest {
         var digestR = Digest{
             .algorithm = DigestAlgorithm.Sha256,
             .value = "a",

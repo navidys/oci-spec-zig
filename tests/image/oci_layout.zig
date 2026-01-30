@@ -4,14 +4,19 @@ const ocispec = @import("ocispec");
 const image = ocispec.image;
 
 test "image oci layout" {
+    var arena = std.heap.ArenaAllocator.init(std.heap.page_allocator);
+    defer arena.deinit();
+
+    const allocator = arena.allocator();
+
     const oci_layout_filename = "oci_layout.json";
     const oci_layout1_file_path = try std.mem.concat(
-        std.heap.page_allocator,
+        allocator,
         u8,
         &.{ "./tests/fixtures/", oci_layout_filename },
     );
-    const oci_layout1 = try image.OciLayout.initFromFile(oci_layout1_file_path);
-    const oci_layout1_string = try oci_layout1.toString();
+    const oci_layout1 = try image.OciLayout.initFromFile(allocator, oci_layout1_file_path);
+    const oci_layout1_string = try oci_layout1.toString(allocator);
 
     try std.testing.expect(std.mem.eql(
         u8,
@@ -26,10 +31,10 @@ test "image oci layout" {
     ) == true);
 
     // try to write json pretty to new file and compare to original file
-    const oci_layout1_string_pretty = try oci_layout1.toStringPretty();
+    const oci_layout1_string_pretty = try oci_layout1.toStringPretty(allocator);
 
     const oci_layout2_file_path = try std.mem.concat(
-        std.heap.page_allocator,
+        allocator,
         u8,
         &.{ utils.TEST_DATA_DIR, "/", oci_layout_filename },
     );

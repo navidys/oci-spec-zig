@@ -8,6 +8,7 @@ const vm = @import("vm.zig");
 const linux = @import("linux.zig");
 const solaris = @import("solaris.zig");
 const zos = @import("zos.zig");
+const Allocator = std.mem.Allocator;
 
 /// Base configuration for the container.
 pub const Spec = struct {
@@ -96,11 +97,8 @@ pub const Spec = struct {
     /// VM specifies configuration for Virtual Machine based containers.
     vm: ?vm.VM = null,
 
-    pub fn initFromFile(file_path: []const u8) !Spec {
-        const allocator = std.heap.page_allocator;
-        const content = try utils.readFileContent(file_path, allocator);
-
-        defer allocator.free(content);
+    pub fn initFromFile(allocator: Allocator, file_path: []const u8) !Spec {
+        const content = try utils.readFileContent(allocator, file_path);
 
         const parsed = try std.json.parseFromSlice(
             Spec,
@@ -113,8 +111,8 @@ pub const Spec = struct {
     }
 
     /// Attempts to write an image configuration to a string as JSON.
-    pub fn toString(self: @This()) ![]const u8 {
-        const conf = try utils.toJsonString(self, false);
+    pub fn toString(self: @This(), allocator: Allocator) ![]const u8 {
+        const conf = try utils.toJsonString(allocator, self, false);
 
         return conf;
     }
@@ -127,26 +125,26 @@ pub const Spec = struct {
     }
 
     /// Attempts to write an image configuration to a file as JSON. If the file already exists, it
-    pub fn toFile(self: @This(), file_path: []const u8) !void {
+    pub fn toFile(self: @This(), allocator: Allocator, file_path: []const u8) !void {
         const content = try self.toString();
         const content_newline = try std.mem.concat(
-            std.heap.page_allocator,
+            allocator,
             u8,
             &.{ content, "\n" },
         );
 
-        try utils.writeFileContent(file_path, content_newline);
+        try utils.writeFileContent(allocator, file_path, content_newline);
     }
 
     /// Attempts to write an image configuration to a file as pretty printed JSON. If the file already exists, it
-    pub fn toFilePretty(self: @This(), file_path: []const u8) !void {
+    pub fn toFilePretty(self: @This(), allocator: Allocator, file_path: []const u8) !void {
         const content = try self.toStringPretty();
         const content_newline = try std.mem.concat(
-            std.heap.page_allocator,
+            allocator,
             u8,
             &.{ content, "\n" },
         );
 
-        try utils.writeFileContent(file_path, content_newline);
+        try utils.writeFileContent(allocator, file_path, content_newline);
     }
 };

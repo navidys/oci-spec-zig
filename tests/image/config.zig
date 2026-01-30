@@ -4,13 +4,18 @@ const ocispec = @import("ocispec");
 const image = ocispec.image;
 
 test "image config" {
+    var arena = std.heap.ArenaAllocator.init(std.heap.page_allocator);
+    defer arena.deinit();
+
+    const allocator = arena.allocator();
+
     const config_filename = "config.json";
     const config1_file_path = try std.mem.concat(
-        std.heap.page_allocator,
+        allocator,
         u8,
         &.{ "./tests/fixtures/", config_filename },
     );
-    const config1 = try image.Configuration.initFromFile(config1_file_path);
+    const config1 = try image.Configuration.initFromFile(allocator, config1_file_path);
 
     try std.testing.expect(std.mem.eql(
         u8,
@@ -32,10 +37,10 @@ test "image config" {
         "alice",
     ) == true);
     // try to write json pretty to new file and compare to original file
-    const config1_string_pretty = try config1.toStringPretty();
+    const config1_string_pretty = try config1.toStringPretty(allocator);
 
     const config2_file_path = try std.mem.concat(
-        std.heap.page_allocator,
+        allocator,
         u8,
         &.{ utils.TEST_DATA_DIR, "/", config_filename },
     );
