@@ -2,6 +2,7 @@ const std = @import("std");
 const utils = @import("../utils.zig");
 const ocispec = @import("ocispec");
 const image = ocispec.image;
+const testing = std.testing;
 
 test "image oci layout" {
     var arena = std.heap.ArenaAllocator.init(std.heap.page_allocator);
@@ -18,8 +19,8 @@ test "image oci layout" {
     const oci_layout1 = try image.OciLayout.initFromFile(allocator, oci_layout1_file_path);
     const oci_layout1_string = try oci_layout1.toString(allocator);
 
-    try std.testing.expectEqualSlices(u8, oci_layout1.imageLayoutVersion, "1.0.0");
-    try std.testing.expectEqualSlices(u8, oci_layout1_string, "{\"imageLayoutVersion\":\"1.0.0\"}");
+    try testing.expectEqualStrings(oci_layout1.imageLayoutVersion, "1.0.0");
+    try testing.expectEqualStrings(oci_layout1_string, "{\"imageLayoutVersion\":\"1.0.0\"}");
 
     // try to write json pretty to new file and compare to original file
     const oci_layout1_string_pretty = try oci_layout1.toStringPretty(allocator);
@@ -41,5 +42,5 @@ test "image oci layout" {
     const oci_layout1_file_stat = try oci_layout1_file.stat();
     const oci_layout2_file_stat = try oci_layout2_file.stat();
 
-    try std.testing.expectEqual(oci_layout1_file_stat.size, oci_layout2_file_stat.size + 1);
+    try testing.expectEqual(oci_layout1_file_stat.size, oci_layout2_file_stat.size + 1);
 }

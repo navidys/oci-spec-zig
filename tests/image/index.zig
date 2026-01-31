@@ -2,6 +2,7 @@ const std = @import("std");
 const utils = @import("../utils.zig");
 const ocispec = @import("ocispec");
 const image = ocispec.image;
+const testing = std.testing;
 
 test "image index" {
     var arena = std.heap.ArenaAllocator.init(std.heap.page_allocator);
@@ -18,15 +19,15 @@ test "image index" {
     const index1 = try image.Index.initFromFile(allocator, index1_file_path);
     const index1_manifest = index1.manifests;
 
-    try std.testing.expectEqual(index1.schemaVersion, 2);
-    try std.testing.expectEqual(index1.mediaType, image.MediaType.ImageIndex);
-    try std.testing.expectEqual(index1_manifest.len, 2);
-    try std.testing.expectEqual(index1_manifest[0].mediaType, image.MediaType.ImageManifest);
-    try std.testing.expectEqual(index1_manifest[0].size, 7143);
-    try std.testing.expectEqual(index1_manifest[0].digest.algorithm, image.DigestAlgorithm.Sha256);
-    try std.testing.expectEqualSlices(u8, index1_manifest[0].digest.value, "e692418e4cbaf90ca69d05a66403747baa33ee08806650b51fab815ad7fc331f");
-    try std.testing.expectEqual(index1_manifest[0].platform.?.architecture, image.Arch.PowerPC64le);
-    try std.testing.expectEqual(index1_manifest[0].platform.?.os, image.OS.Linux);
+    try testing.expectEqual(index1.schemaVersion, 2);
+    try testing.expectEqual(index1.mediaType, image.MediaType.ImageIndex);
+    try testing.expectEqual(index1_manifest.len, 2);
+    try testing.expectEqual(index1_manifest[0].mediaType, image.MediaType.ImageManifest);
+    try testing.expectEqual(index1_manifest[0].size, 7143);
+    try testing.expectEqual(index1_manifest[0].digest.algorithm, image.DigestAlgorithm.Sha256);
+    try testing.expectEqualStrings(index1_manifest[0].digest.value, "e692418e4cbaf90ca69d05a66403747baa33ee08806650b51fab815ad7fc331f");
+    try testing.expectEqual(index1_manifest[0].platform.?.architecture, image.Arch.PowerPC64le);
+    try testing.expectEqual(index1_manifest[0].platform.?.os, image.OS.Linux);
 
     // try to write json pretty to new file and compare to original file
     const index1_string_pretty = try index1.toStringPretty(allocator);
@@ -48,5 +49,5 @@ test "image index" {
     const index1_file_stat = try index1_file.stat();
     const index2_file_stat = try index2_file.stat();
 
-    try std.testing.expectEqual(index1_file_stat.size, index2_file_stat.size + 1);
+    try testing.expectEqual(index1_file_stat.size, index2_file_stat.size + 1);
 }

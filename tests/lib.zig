@@ -4,4 +4,5 @@ test {
     _ = @import("image/manifest.zig");
     _ = @import("image/index.zig");
     _ = @import("image/config.zig");
+    _ = @import("image/define_os.zig");
 }

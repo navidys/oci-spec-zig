@@ -213,6 +213,10 @@ pub const OS = enum {
                 if (std.mem.eql(u8, ostype, "zos") == true) {
                     return OS.ZOS;
                 }
+
+                if (std.mem.eql(u8, ostype, "solaris") == true) {
+                    return OS.Solaris;
+                }
             },
             else => return OS.Other,
         }

@@ -2,6 +2,7 @@ const std = @import("std");
 const utils = @import("../utils.zig");
 const ocispec = @import("ocispec");
 const image = ocispec.image;
+const testing = std.testing;
 
 test "image manifest" {
     var arena = std.heap.ArenaAllocator.init(std.heap.page_allocator);
@@ -18,12 +19,12 @@ test "image manifest" {
     const manifest1 = try image.Manifest.initFromFile(allocator, manifest1_file_path);
     const manifest1_subject = manifest1.subject;
 
-    try std.testing.expectEqual(manifest1.schemaVersion, 2);
-    try std.testing.expectEqual(manifest1.mediaType, image.MediaType.ImageManifest);
-    try std.testing.expectEqual(manifest1.config.size, 7023);
-    try std.testing.expectEqual(manifest1.layers.len, 3);
-    try std.testing.expect(manifest1_subject.?.mediaType == image.MediaType.ImageManifest);
-    try std.testing.expect(manifest1_subject.?.size == 7682);
+    try testing.expectEqual(manifest1.schemaVersion, 2);
+    try testing.expectEqual(manifest1.mediaType, image.MediaType.ImageManifest);
+    try testing.expectEqual(manifest1.config.size, 7023);
+    try testing.expectEqual(manifest1.layers.len, 3);
+    try testing.expect(manifest1_subject.?.mediaType == image.MediaType.ImageManifest);
+    try testing.expect(manifest1_subject.?.size == 7682);
 
     // try to write json pretty to new file and compare to original file
     const manifest1_string_pretty = try manifest1.toStringPretty(allocator);
@@ -45,5 +46,5 @@ test "image manifest" {
     const manifest1_file_stat = try manifest1_file.stat();
     const manifest2_file_stat = try manifest2_file.stat();
 
-    try std.testing.expectEqual(manifest1_file_stat.size, manifest2_file_stat.size + 1);
+    try testing.expectEqual(manifest1_file_stat.size, manifest2_file_stat.size + 1);
 }
