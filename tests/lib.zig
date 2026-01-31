@@ -5,4 +5,5 @@ test {
     _ = @import("image/index.zig");
     _ = @import("image/config.zig");
     _ = @import("image/define_os.zig");
+    _ = @import("image/define_arch.zig");
 }
