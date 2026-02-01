@@ -7,4 +7,5 @@ test {
     _ = @import("image/define_os.zig");
     _ = @import("image/define_arch.zig");
     _ = @import("image/define_media_type.zig");
+    _ = @import("runtime/config.zig");
 }

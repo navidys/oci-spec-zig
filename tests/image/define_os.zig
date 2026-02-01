@@ -371,7 +371,7 @@ test "image define OS jsonParse" {
     // Other
     var osOther = std.json.Scanner.initCompleteInput(
         testing.allocator,
-        "\"unknown\"",
+        "\"other\"",
     );
 
     defer osOther.deinit();
