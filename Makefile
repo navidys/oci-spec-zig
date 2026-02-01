@@ -38,16 +38,16 @@ install.tools: .install.pre-commit .install.codespell .install.kcov ## Install n
 .PHONY: .install.pre-commit
 .install.pre-commit:
 	if [ -z "$(PRE_COMMIT)" ]; then \
-		python3 -m pip install --user pre-commit; \
+		@python3 -m pip install --user pre-commit; \
 	fi
 
 .PHONY: .install.codespell
 .install.codespell:
-	sudo ${PKG_MANAGER} -y install codespell
+	@sudo ${PKG_MANAGER} -y install codespell
 
 .PHONY: .install.kcov
 .install.kcov:
-	sudo ${PKG_MANAGER} -y install kcov
+	@sudo ${PKG_MANAGER} -y install kcov
 
 #=================================================
 # Testing (units, functionality, ...) targets
@@ -91,5 +91,5 @@ help: ## Print listing of key targets with their descriptions
 	@printf $(_HLPFMT) "Target:" "Description:"
 	@printf $(_HLPFMT) "--------------" "--------------------"
 	@$(_HLP_TGTS_CMD) | sort | \
-		awk 'BEGIN {FS = ":(.*)?## "}; \
+		@awk 'BEGIN {FS = ":(.*)?## "}; \
 			{printf $(_HLPFMT), $$1, $$2}'

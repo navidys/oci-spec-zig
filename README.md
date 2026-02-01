@@ -17,28 +17,31 @@ This library provides a convenient way to interact with the specifications defin
 
 Zig version >= 0.14.1
 
-## Build
+## Installation
 
-```
-$ make build
-```
-
-## Tests
-
-To run unit-tests:
+Fetch latest tagged release or lated build of oci-spec-zs master branch.
 
 ```shell
-$ make test
+# Version of oci-spec-zig that works with a tagged release of Zig
+# Replace `<REPLACE ME>` with the version of oci-spec-zig that you want to use
+# See: https://github.com/navidys/oci-spec-zig/releases
+zig fetch --save https://github.com/navidys/oci-spec-zig/archive/refs/tags/<REPLACE ME>.tar.gz
+
+
+# oci-spec-zig latest build (master branch)
+zig fetch --save git+https://github.com/navidys/oci-spec-zig
 ```
 
-To generate coverage first its requires to install `kcov` utility.
+Then add the following toe build.zig:
 
 ```shell
-$ make .install.kcov
-$ make coverage
+const ocispec = b.dependency("ocispec", .{});
+exe.root_module.addImport("ocispec", ocispec.module("ocispec"));
 ```
 
 ## Example
+
+To explore additional examples, navigate to the [examples/](./examples/) directory.
 
 ```shell
 const std = @import("std");
