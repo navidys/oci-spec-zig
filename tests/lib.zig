@@ -8,4 +8,6 @@ test {
     _ = @import("image/define_arch.zig");
     _ = @import("image/define_media_type.zig");
     _ = @import("runtime/config.zig");
+    _ = @import("runtime/zos.zig");
+    _ = @import("runtime/scheduler.zig");
 }
