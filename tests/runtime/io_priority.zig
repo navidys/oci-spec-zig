@@ -73,6 +73,6 @@ test "runtime LinuxSchedulerPolicy jsonStringify" {
 
     // test
     try testing.expectEqualStrings(rt.items, "\"IOPRIO_CLASS_RT\"");
-    try testing.expectEqualStrings(rt.items, "\"IOPRIO_CLASS_BE\"");
-    try testing.expectEqualStrings(rt.items, "\"IOPRIO_CLASS_IDLE\"");
+    try testing.expectEqualStrings(be.items, "\"IOPRIO_CLASS_BE\"");
+    try testing.expectEqualStrings(idle.items, "\"IOPRIO_CLASS_IDLE\"");
 }

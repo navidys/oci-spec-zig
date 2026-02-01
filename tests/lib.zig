@@ -10,4 +10,5 @@ test {
     _ = @import("runtime/config.zig");
     _ = @import("runtime/zos.zig");
     _ = @import("runtime/scheduler.zig");
+    _ = @import("runtime/io_priority.zig");
 }
