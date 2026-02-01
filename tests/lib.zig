@@ -9,6 +9,7 @@ test {
     _ = @import("image/define_media_type.zig");
     _ = @import("runtime/config.zig");
     _ = @import("runtime/zos.zig");
-    _ = @import("runtime/scheduler.zig");
+    _ = @import("runtime/scheduler_policy.zig");
+    _ = @import("runtime/scheduler_flag.zig");
     _ = @import("runtime/io_priority.zig");
 }
