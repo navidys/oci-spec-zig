@@ -41,6 +41,8 @@ exe.root_module.addImport("ocispec", ocispec.module("ocispec"));
 
 ## Example
 
+To explore additional examples, navigate to the [examples/](./examples/) directory.
+
 ```shell
 const std = @import("std");
 const ocispec = @import("ocispec");

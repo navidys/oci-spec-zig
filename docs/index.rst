@@ -1,22 +1,23 @@
-oci-spec-zig documentation
-====================================
+oci-spec-zig
+===============
 
 **oci-spec-zig**  is OCI Runtime, Image and Distribution Spec library written in Zig.
 
-This library provides a convenient way to interact with the specifications defined by the `Open Container Initiative (OCI) https://opencontainers.org`.
+This library provides a convenient way to interact with the specifications defined by the `Open Container Initiative (OCI) <https://opencontainers.org>`_.
 
-- `Image Format Specification https://github.com/opencontainers/image-spec/blob/main/spec.md`
-- `Runtime Specification https://github.com/opencontainers/runtime-spec/blob/master/spec.md`
-- `Distribution Specification https://github.com/opencontainers/distribution-spec/blob/main/spec.md`
+    *  `Image Format Specification <https://github.com/opencontainers/image-spec/blob/main/spec.md>`_
+    *  `Runtime Specification <https://github.com/opencontainers/runtime-spec/blob/master/spec.md>`_
+    *  `Distribution Specification <https://github.com/opencontainers/distribution-spec/blob/main/spec.md>`_
 
 
 Requirements
---------------
+----------------
+
 Zig version >= 0.14.1
 
 
 Installation
---------------
+---------------
 
 Fetch latest tagged release or lated build of oci-spec-zs master branch.
 
@@ -38,3 +39,12 @@ Then add the following toe build.zig:
 
     const ocispec = b.dependency("ocispec", .{});
     exe.root_module.addImport("ocispec", ocispec.module("ocispec"));
+
+Further Reading
+------------------
+
+.. toctree::
+    :maxdepth: 2
+
+    Introduction <self>
+    Examples <examples>
