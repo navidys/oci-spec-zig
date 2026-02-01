@@ -1,6 +1,6 @@
 .{
     .name = .ocispec,
-    .version = "0.3.0",
+    .version = "0.4.0-dev",
     .fingerprint = 0x1b9a439871f488be,
     .minimum_zig_version = "0.14.1",
     .dependencies = .{},
