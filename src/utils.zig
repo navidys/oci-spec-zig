@@ -31,18 +31,10 @@ pub fn writeFileContent(allocator: Allocator, file_path: []const u8, content: []
 }
 
 pub fn toJsonString(allocator: Allocator, value: anytype, pretty: bool) ![]const u8 {
-    const jsonValue = switch (pretty) {
-        true => try std.json.stringifyAlloc(
-            allocator,
-            value,
-            .{ .emit_strings_as_arrays = false, .emit_null_optional_fields = false, .whitespace = .indent_4 },
-        ),
-        false => try std.json.stringifyAlloc(
-            allocator,
-            value,
-            .{ .emit_strings_as_arrays = false, .emit_null_optional_fields = false },
-        ),
-    };
+    const options: std.json.Stringify.Options = if (pretty)
+        .{ .emit_strings_as_arrays = false, .emit_null_optional_fields = false, .whitespace = .indent_4 }
+    else
+        .{ .emit_strings_as_arrays = false, .emit_null_optional_fields = false };
 
-    return jsonValue;
+    return std.json.Stringify.valueAlloc(allocator, value, options);
 }

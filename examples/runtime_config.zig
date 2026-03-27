@@ -13,11 +13,9 @@ pub fn main() !void {
 
     const config_content = try spec.toStringPretty(allocator);
 
-    const stdout_file = std.io.getStdOut().writer();
-    var bw = std.io.bufferedWriter(stdout_file);
-    const stdout = bw.writer();
+    var write_buf: [4096]u8 = undefined;
+    var stdout = std.fs.File.stdout().writer(&write_buf);
+    try stdout.interface.print("{s}\n", .{config_content});
+    stdout.interface.flush() catch {};
 
-    try stdout.print("{s}\n", .{config_content});
-
-    try bw.flush();
 }

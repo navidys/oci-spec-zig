@@ -5,154 +5,154 @@ const testing = std.testing;
 
 test "image define Arch jsonStringify" {
     // I386
-    var archI386Buf = std.ArrayList(u8).init(testing.allocator);
-    defer archI386Buf.deinit();
+    var archI386Buf: std.ArrayList(u8) = .{};
+    defer archI386Buf.deinit(testing.allocator);
 
-    try arch.jsonStringify(&arch.I386, archI386Buf.writer());
+    try arch.jsonStringify(&arch.I386, archI386Buf.writer(testing.allocator));
 
     // Amd64
-    var archAmd64Buf = std.ArrayList(u8).init(testing.allocator);
-    defer archAmd64Buf.deinit();
+    var archAmd64Buf: std.ArrayList(u8) = .{};
+    defer archAmd64Buf.deinit(testing.allocator);
 
-    try arch.jsonStringify(&arch.Amd64, archAmd64Buf.writer());
+    try arch.jsonStringify(&arch.Amd64, archAmd64Buf.writer(testing.allocator));
 
     // Amd64p32
-    var archAmd64p32Buf = std.ArrayList(u8).init(testing.allocator);
-    defer archAmd64p32Buf.deinit();
+    var archAmd64p32Buf: std.ArrayList(u8) = .{};
+    defer archAmd64p32Buf.deinit(testing.allocator);
 
-    try arch.jsonStringify(&arch.Amd64p32, archAmd64p32Buf.writer());
+    try arch.jsonStringify(&arch.Amd64p32, archAmd64p32Buf.writer(testing.allocator));
 
     // ARM
-    var archARMBuf = std.ArrayList(u8).init(testing.allocator);
-    defer archARMBuf.deinit();
+    var archARMBuf: std.ArrayList(u8) = .{};
+    defer archARMBuf.deinit(testing.allocator);
 
-    try arch.jsonStringify(&arch.ARM, archARMBuf.writer());
+    try arch.jsonStringify(&arch.ARM, archARMBuf.writer(testing.allocator));
 
     // ARMbe
-    var archARMbeBuf = std.ArrayList(u8).init(testing.allocator);
-    defer archARMbeBuf.deinit();
+    var archARMbeBuf: std.ArrayList(u8) = .{};
+    defer archARMbeBuf.deinit(testing.allocator);
 
-    try arch.jsonStringify(&arch.ARMbe, archARMbeBuf.writer());
+    try arch.jsonStringify(&arch.ARMbe, archARMbeBuf.writer(testing.allocator));
 
     // ARM64
-    var archARM64Buf = std.ArrayList(u8).init(testing.allocator);
-    defer archARM64Buf.deinit();
+    var archARM64Buf: std.ArrayList(u8) = .{};
+    defer archARM64Buf.deinit(testing.allocator);
 
-    try arch.jsonStringify(&arch.ARM64, archARM64Buf.writer());
+    try arch.jsonStringify(&arch.ARM64, archARM64Buf.writer(testing.allocator));
 
     // ARM64be
-    var archARM64beBuf = std.ArrayList(u8).init(testing.allocator);
-    defer archARM64beBuf.deinit();
+    var archARM64beBuf: std.ArrayList(u8) = .{};
+    defer archARM64beBuf.deinit(testing.allocator);
 
-    try arch.jsonStringify(&arch.ARM64be, archARM64beBuf.writer());
+    try arch.jsonStringify(&arch.ARM64be, archARM64beBuf.writer(testing.allocator));
 
     // LoongArch64
-    var archLoongArch64Buf = std.ArrayList(u8).init(testing.allocator);
-    defer archLoongArch64Buf.deinit();
+    var archLoongArch64Buf: std.ArrayList(u8) = .{};
+    defer archLoongArch64Buf.deinit(testing.allocator);
 
-    try arch.jsonStringify(&arch.LoongArch64, archLoongArch64Buf.writer());
+    try arch.jsonStringify(&arch.LoongArch64, archLoongArch64Buf.writer(testing.allocator));
 
     // Mips
-    var archMipsBuf = std.ArrayList(u8).init(testing.allocator);
-    defer archMipsBuf.deinit();
+    var archMipsBuf: std.ArrayList(u8) = .{};
+    defer archMipsBuf.deinit(testing.allocator);
 
-    try arch.jsonStringify(&arch.Mips, archMipsBuf.writer());
+    try arch.jsonStringify(&arch.Mips, archMipsBuf.writer(testing.allocator));
 
     // Mipsle
-    var archMipsleBuf = std.ArrayList(u8).init(testing.allocator);
-    defer archMipsleBuf.deinit();
+    var archMipsleBuf: std.ArrayList(u8) = .{};
+    defer archMipsleBuf.deinit(testing.allocator);
 
-    try arch.jsonStringify(&arch.Mipsle, archMipsleBuf.writer());
+    try arch.jsonStringify(&arch.Mipsle, archMipsleBuf.writer(testing.allocator));
 
     // Mips64
-    var archMips64Buf = std.ArrayList(u8).init(testing.allocator);
-    defer archMips64Buf.deinit();
+    var archMips64Buf: std.ArrayList(u8) = .{};
+    defer archMips64Buf.deinit(testing.allocator);
 
-    try arch.jsonStringify(&arch.Mips64, archMips64Buf.writer());
+    try arch.jsonStringify(&arch.Mips64, archMips64Buf.writer(testing.allocator));
 
     // Mips64le
-    var archMips64leBuf = std.ArrayList(u8).init(testing.allocator);
-    defer archMips64leBuf.deinit();
+    var archMips64leBuf: std.ArrayList(u8) = .{};
+    defer archMips64leBuf.deinit(testing.allocator);
 
-    try arch.jsonStringify(&arch.Mips64le, archMips64leBuf.writer());
+    try arch.jsonStringify(&arch.Mips64le, archMips64leBuf.writer(testing.allocator));
 
     // Mips64p32
-    var archMips64p32Buf = std.ArrayList(u8).init(testing.allocator);
-    defer archMips64p32Buf.deinit();
+    var archMips64p32Buf: std.ArrayList(u8) = .{};
+    defer archMips64p32Buf.deinit(testing.allocator);
 
-    try arch.jsonStringify(&arch.Mips64p32, archMips64p32Buf.writer());
+    try arch.jsonStringify(&arch.Mips64p32, archMips64p32Buf.writer(testing.allocator));
 
     // Mips64p32le
-    var archMips64p32leBuf = std.ArrayList(u8).init(testing.allocator);
-    defer archMips64p32leBuf.deinit();
+    var archMips64p32leBuf: std.ArrayList(u8) = .{};
+    defer archMips64p32leBuf.deinit(testing.allocator);
 
-    try arch.jsonStringify(&arch.Mips64p32le, archMips64p32leBuf.writer());
+    try arch.jsonStringify(&arch.Mips64p32le, archMips64p32leBuf.writer(testing.allocator));
 
     // PowerPC
-    var archPowerPCBuf = std.ArrayList(u8).init(testing.allocator);
-    defer archPowerPCBuf.deinit();
+    var archPowerPCBuf: std.ArrayList(u8) = .{};
+    defer archPowerPCBuf.deinit(testing.allocator);
 
-    try arch.jsonStringify(&arch.PowerPC, archPowerPCBuf.writer());
+    try arch.jsonStringify(&arch.PowerPC, archPowerPCBuf.writer(testing.allocator));
 
     // PowerPC64
-    var archPowerPC64Buf = std.ArrayList(u8).init(testing.allocator);
-    defer archPowerPC64Buf.deinit();
+    var archPowerPC64Buf: std.ArrayList(u8) = .{};
+    defer archPowerPC64Buf.deinit(testing.allocator);
 
-    try arch.jsonStringify(&arch.PowerPC64, archPowerPC64Buf.writer());
+    try arch.jsonStringify(&arch.PowerPC64, archPowerPC64Buf.writer(testing.allocator));
 
     // PowerPC64le
-    var archPowerPC64leBuf = std.ArrayList(u8).init(testing.allocator);
-    defer archPowerPC64leBuf.deinit();
+    var archPowerPC64leBuf: std.ArrayList(u8) = .{};
+    defer archPowerPC64leBuf.deinit(testing.allocator);
 
-    try arch.jsonStringify(&arch.PowerPC64le, archPowerPC64leBuf.writer());
+    try arch.jsonStringify(&arch.PowerPC64le, archPowerPC64leBuf.writer(testing.allocator));
 
     // RISCV
-    var archRISCVBuf = std.ArrayList(u8).init(testing.allocator);
-    defer archRISCVBuf.deinit();
+    var archRISCVBuf: std.ArrayList(u8) = .{};
+    defer archRISCVBuf.deinit(testing.allocator);
 
-    try arch.jsonStringify(&arch.RISCV, archRISCVBuf.writer());
+    try arch.jsonStringify(&arch.RISCV, archRISCVBuf.writer(testing.allocator));
 
     // RISCV64
-    var archRISCV64Buf = std.ArrayList(u8).init(testing.allocator);
-    defer archRISCV64Buf.deinit();
+    var archRISCV64Buf: std.ArrayList(u8) = .{};
+    defer archRISCV64Buf.deinit(testing.allocator);
 
-    try arch.jsonStringify(&arch.RISCV64, archRISCV64Buf.writer());
+    try arch.jsonStringify(&arch.RISCV64, archRISCV64Buf.writer(testing.allocator));
 
     // S390
-    var archS390Buf = std.ArrayList(u8).init(testing.allocator);
-    defer archS390Buf.deinit();
+    var archS390Buf: std.ArrayList(u8) = .{};
+    defer archS390Buf.deinit(testing.allocator);
 
-    try arch.jsonStringify(&arch.S390, archS390Buf.writer());
+    try arch.jsonStringify(&arch.S390, archS390Buf.writer(testing.allocator));
 
     // S390x
-    var archS390xBuf = std.ArrayList(u8).init(testing.allocator);
-    defer archS390xBuf.deinit();
+    var archS390xBuf: std.ArrayList(u8) = .{};
+    defer archS390xBuf.deinit(testing.allocator);
 
-    try arch.jsonStringify(&arch.S390x, archS390xBuf.writer());
+    try arch.jsonStringify(&arch.S390x, archS390xBuf.writer(testing.allocator));
 
     // SPARC
-    var archSPARCBuf = std.ArrayList(u8).init(testing.allocator);
-    defer archSPARCBuf.deinit();
+    var archSPARCBuf: std.ArrayList(u8) = .{};
+    defer archSPARCBuf.deinit(testing.allocator);
 
-    try arch.jsonStringify(&arch.SPARC, archSPARCBuf.writer());
+    try arch.jsonStringify(&arch.SPARC, archSPARCBuf.writer(testing.allocator));
 
     // SPARC64
-    var archSPARC64Buf = std.ArrayList(u8).init(testing.allocator);
-    defer archSPARC64Buf.deinit();
+    var archSPARC64Buf: std.ArrayList(u8) = .{};
+    defer archSPARC64Buf.deinit(testing.allocator);
 
-    try arch.jsonStringify(&arch.SPARC64, archSPARC64Buf.writer());
+    try arch.jsonStringify(&arch.SPARC64, archSPARC64Buf.writer(testing.allocator));
 
     // Wasm
-    var archWasmBuf = std.ArrayList(u8).init(testing.allocator);
-    defer archWasmBuf.deinit();
+    var archWasmBuf: std.ArrayList(u8) = .{};
+    defer archWasmBuf.deinit(testing.allocator);
 
-    try arch.jsonStringify(&arch.Wasm, archWasmBuf.writer());
+    try arch.jsonStringify(&arch.Wasm, archWasmBuf.writer(testing.allocator));
 
     // Other
-    var archOtherBuf = std.ArrayList(u8).init(testing.allocator);
-    defer archOtherBuf.deinit();
+    var archOtherBuf: std.ArrayList(u8) = .{};
+    defer archOtherBuf.deinit(testing.allocator);
 
-    try arch.jsonStringify(&arch.Other, archOtherBuf.writer());
+    try arch.jsonStringify(&arch.Other, archOtherBuf.writer(testing.allocator));
 
     // test
     try testing.expectEqualStrings(archI386Buf.items, "\"386\"");

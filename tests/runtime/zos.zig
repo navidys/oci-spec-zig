@@ -53,28 +53,28 @@ test "runtime ZosNamespaceType jsonParse" {
 
 test "runtime ZosNamespaceType jsonStringify" {
     // Mount
-    var nsMount = std.ArrayList(u8).init(testing.allocator);
-    defer nsMount.deinit();
+    var nsMount: std.ArrayList(u8) = .{};
+    defer nsMount.deinit(testing.allocator);
 
-    try zosnsType.jsonStringify(&zosnsType.Mount, nsMount.writer());
+    try zosnsType.jsonStringify(&zosnsType.Mount, nsMount.writer(testing.allocator));
 
     // Pid
-    var nsPid = std.ArrayList(u8).init(testing.allocator);
-    defer nsPid.deinit();
+    var nsPid: std.ArrayList(u8) = .{};
+    defer nsPid.deinit(testing.allocator);
 
-    try zosnsType.jsonStringify(&zosnsType.Pid, nsPid.writer());
+    try zosnsType.jsonStringify(&zosnsType.Pid, nsPid.writer(testing.allocator));
 
     // Ipc
-    var nsIpc = std.ArrayList(u8).init(testing.allocator);
-    defer nsIpc.deinit();
+    var nsIpc: std.ArrayList(u8) = .{};
+    defer nsIpc.deinit(testing.allocator);
 
-    try zosnsType.jsonStringify(&zosnsType.Ipc, nsIpc.writer());
+    try zosnsType.jsonStringify(&zosnsType.Ipc, nsIpc.writer(testing.allocator));
 
     // Uts
-    var nsUts = std.ArrayList(u8).init(testing.allocator);
-    defer nsUts.deinit();
+    var nsUts: std.ArrayList(u8) = .{};
+    defer nsUts.deinit(testing.allocator);
 
-    try zosnsType.jsonStringify(&zosnsType.Uts, nsUts.writer());
+    try zosnsType.jsonStringify(&zosnsType.Uts, nsUts.writer(testing.allocator));
 
     // test
     try testing.expectEqualStrings(nsMount.items, "\"mount\"");

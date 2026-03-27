@@ -20,11 +20,11 @@ pub fn main() !void {
         .digest = try image.Digest.initFromString(allocator, "sha256:9834876dcfb05cb167a5c24953eba58c4ac89b1adf57f28f2f9d09af107ee8f0"),
     };
 
-    var manifests = std.ArrayList(image.Descriptor).init(allocator);
+    var manifests: std.ArrayListUnmanaged(image.Descriptor) = .{};
 
-    try manifests.append(index_manifest);
+    try manifests.append(allocator, index_manifest);
 
-    const image_manifests: []image.Descriptor = try manifests.toOwnedSlice();
+    const image_manifests: []image.Descriptor = try manifests.toOwnedSlice(allocator);
 
     const image_index = image.Index{
         .mediaType = image.MediaType.ImageIndex,
@@ -33,11 +33,9 @@ pub fn main() !void {
 
     const image_index_content = try image_index.toStringPretty(allocator);
 
-    const stdout_file = std.io.getStdOut().writer();
-    var bw = std.io.bufferedWriter(stdout_file);
-    const stdout = bw.writer();
+    var write_buf: [4096]u8 = undefined;
+    var stdout = std.fs.File.stdout().writer(&write_buf);
+    try stdout.interface.print("{s}\n", .{image_index_content});
+    stdout.interface.flush() catch {};
 
-    try stdout.print("{s}\n", .{image_index_content});
-
-    try bw.flush();
 }

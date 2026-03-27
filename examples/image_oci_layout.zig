@@ -12,11 +12,9 @@ pub fn main() !void {
 
     const oci_layout_content = try oci_layout.toStringPretty(allocator);
 
-    const stdout_file = std.io.getStdOut().writer();
-    var bw = std.io.bufferedWriter(stdout_file);
-    const stdout = bw.writer();
+    var write_buf: [4096]u8 = undefined;
+    var stdout = std.fs.File.stdout().writer(&write_buf);
+    try stdout.interface.print("{s}\n", .{oci_layout_content});
+    stdout.interface.flush() catch {};
 
-    try stdout.print("{s}\n", .{oci_layout_content});
-
-    try bw.flush();
 }
