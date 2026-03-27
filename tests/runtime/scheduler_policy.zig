@@ -114,46 +114,46 @@ test "runtime LinuxSchedulerPolicy jsonParse" {
 
 test "runtime LinuxSchedulerPolicy jsonStringify" {
     // SchedOther
-    var other = std.ArrayList(u8).init(testing.allocator);
-    defer other.deinit();
+    var other: std.ArrayList(u8) = .{};
+    defer other.deinit(testing.allocator);
 
-    try policy.jsonStringify(&policy.SchedOther, other.writer());
+    try policy.jsonStringify(&policy.SchedOther, other.writer(testing.allocator));
 
     // SchedFifo
-    var fifo = std.ArrayList(u8).init(testing.allocator);
-    defer fifo.deinit();
+    var fifo: std.ArrayList(u8) = .{};
+    defer fifo.deinit(testing.allocator);
 
-    try policy.jsonStringify(&policy.SchedFifo, fifo.writer());
+    try policy.jsonStringify(&policy.SchedFifo, fifo.writer(testing.allocator));
 
     // SchedRr
-    var rr = std.ArrayList(u8).init(testing.allocator);
-    defer rr.deinit();
+    var rr: std.ArrayList(u8) = .{};
+    defer rr.deinit(testing.allocator);
 
-    try policy.jsonStringify(&policy.SchedRr, rr.writer());
+    try policy.jsonStringify(&policy.SchedRr, rr.writer(testing.allocator));
 
     // SchedBatch
-    var batch = std.ArrayList(u8).init(testing.allocator);
-    defer batch.deinit();
+    var batch: std.ArrayList(u8) = .{};
+    defer batch.deinit(testing.allocator);
 
-    try policy.jsonStringify(&policy.SchedBatch, batch.writer());
+    try policy.jsonStringify(&policy.SchedBatch, batch.writer(testing.allocator));
 
     // SchedIso
-    var iso = std.ArrayList(u8).init(testing.allocator);
-    defer iso.deinit();
+    var iso: std.ArrayList(u8) = .{};
+    defer iso.deinit(testing.allocator);
 
-    try policy.jsonStringify(&policy.SchedIso, iso.writer());
+    try policy.jsonStringify(&policy.SchedIso, iso.writer(testing.allocator));
 
     // SchedIdle
-    var idle = std.ArrayList(u8).init(testing.allocator);
-    defer idle.deinit();
+    var idle: std.ArrayList(u8) = .{};
+    defer idle.deinit(testing.allocator);
 
-    try policy.jsonStringify(&policy.SchedIdle, idle.writer());
+    try policy.jsonStringify(&policy.SchedIdle, idle.writer(testing.allocator));
 
     // SchedDeadline
-    var deadline = std.ArrayList(u8).init(testing.allocator);
-    defer deadline.deinit();
+    var deadline: std.ArrayList(u8) = .{};
+    defer deadline.deinit(testing.allocator);
 
-    try policy.jsonStringify(&policy.SchedDeadline, deadline.writer());
+    try policy.jsonStringify(&policy.SchedDeadline, deadline.writer(testing.allocator));
 
     // test
     try testing.expectEqualStrings(other.items, "\"SCHED_OTHER\"");

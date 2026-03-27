@@ -75,119 +75,119 @@ pub const ExecCPUAffinity = struct {
 };
 
 pub fn getDefaultRootlessMounts(allocator: Allocator) ![]Mount {
-    var mounts = std.ArrayList(Mount).init(allocator);
+    var mounts: std.ArrayListUnmanaged(Mount) = .{};
 
-    var pts_opts = std.ArrayList([]const u8).init(allocator);
-    try pts_opts.append("nosuid");
-    try pts_opts.append("noexec");
-    try pts_opts.append("newinstance");
-    try pts_opts.append("ptmxmode=0666");
-    try pts_opts.append("mode=0620");
-    try mounts.append(Mount{
+    var pts_opts: std.ArrayListUnmanaged([]const u8) = .{};
+    try pts_opts.append(allocator, "nosuid");
+    try pts_opts.append(allocator, "noexec");
+    try pts_opts.append(allocator, "newinstance");
+    try pts_opts.append(allocator, "ptmxmode=0666");
+    try pts_opts.append(allocator, "mode=0620");
+    try mounts.append(allocator, Mount{
         .destination = "/dev/pts",
         .type = "devpts",
         .source = "devpts",
-        .options = try pts_opts.toOwnedSlice(),
+        .options = try pts_opts.toOwnedSlice(allocator),
     });
 
-    var sys_opts = std.ArrayList([]const u8).init(allocator);
-    try sys_opts.append("nosuid");
-    try sys_opts.append("noexec");
-    try sys_opts.append("nodev");
-    try sys_opts.append("ro");
-    try sys_opts.append("rbind");
-    try mounts.append(Mount{
+    var sys_opts: std.ArrayListUnmanaged([]const u8) = .{};
+    try sys_opts.append(allocator, "nosuid");
+    try sys_opts.append(allocator, "noexec");
+    try sys_opts.append(allocator, "nodev");
+    try sys_opts.append(allocator, "ro");
+    try sys_opts.append(allocator, "rbind");
+    try mounts.append(allocator, Mount{
         .destination = "/sys",
         .type = "sysfs",
         .source = "sysfs",
-        .options = try sys_opts.toOwnedSlice(),
+        .options = try sys_opts.toOwnedSlice(allocator),
     });
 
-    return mounts.toOwnedSlice();
+    return mounts.toOwnedSlice(allocator);
 }
 
 pub fn getDefaultMounts(allocator: Allocator) ![]Mount {
-    var mounts = std.ArrayList(Mount).init(allocator);
-    try mounts.append(Mount{
+    var mounts: std.ArrayListUnmanaged(Mount) = .{};
+    try mounts.append(allocator, Mount{
         .destination = "/proc",
         .type = "proc",
         .source = "proc",
     });
 
-    var dev_opts = std.ArrayList([]const u8).init(allocator);
-    try dev_opts.append("nosuid");
-    try dev_opts.append("strictatime");
-    try dev_opts.append("mode=755");
-    try dev_opts.append("size=65536k");
-    try mounts.append(Mount{
+    var dev_opts: std.ArrayListUnmanaged([]const u8) = .{};
+    try dev_opts.append(allocator, "nosuid");
+    try dev_opts.append(allocator, "strictatime");
+    try dev_opts.append(allocator, "mode=755");
+    try dev_opts.append(allocator, "size=65536k");
+    try mounts.append(allocator, Mount{
         .destination = "/dev",
         .type = "tmpfs",
         .source = "tmpfs",
-        .options = try dev_opts.toOwnedSlice(),
+        .options = try dev_opts.toOwnedSlice(allocator),
     });
 
-    var pts_opts = std.ArrayList([]const u8).init(allocator);
-    try pts_opts.append("nosuid");
-    try pts_opts.append("noexec");
-    try pts_opts.append("newinstance");
-    try pts_opts.append("ptmxmode=0666");
-    try pts_opts.append("mode=0620");
-    try pts_opts.append("gid=5");
-    try mounts.append(Mount{
+    var pts_opts: std.ArrayListUnmanaged([]const u8) = .{};
+    try pts_opts.append(allocator, "nosuid");
+    try pts_opts.append(allocator, "noexec");
+    try pts_opts.append(allocator, "newinstance");
+    try pts_opts.append(allocator, "ptmxmode=0666");
+    try pts_opts.append(allocator, "mode=0620");
+    try pts_opts.append(allocator, "gid=5");
+    try mounts.append(allocator, Mount{
         .destination = "/dev/pts",
         .type = "devpts",
         .source = "devpts",
-        .options = try pts_opts.toOwnedSlice(),
+        .options = try pts_opts.toOwnedSlice(allocator),
     });
 
-    var shm_opts = std.ArrayList([]const u8).init(allocator);
-    try shm_opts.append("nosuid");
-    try shm_opts.append("noexec");
-    try shm_opts.append("nodev");
-    try shm_opts.append("mode=1777");
-    try shm_opts.append("size=65536k");
-    try mounts.append(Mount{
+    var shm_opts: std.ArrayListUnmanaged([]const u8) = .{};
+    try shm_opts.append(allocator, "nosuid");
+    try shm_opts.append(allocator, "noexec");
+    try shm_opts.append(allocator, "nodev");
+    try shm_opts.append(allocator, "mode=1777");
+    try shm_opts.append(allocator, "size=65536k");
+    try mounts.append(allocator, Mount{
         .destination = "/dev/shm",
         .type = "tmpfs",
         .source = "shm",
-        .options = try shm_opts.toOwnedSlice(),
+        .options = try shm_opts.toOwnedSlice(allocator),
     });
 
-    var mqueue_opts = std.ArrayList([]const u8).init(allocator);
-    try mqueue_opts.append("nosuid");
-    try mqueue_opts.append("noexec");
-    try mqueue_opts.append("nodev");
-    try mounts.append(Mount{
+    var mqueue_opts: std.ArrayListUnmanaged([]const u8) = .{};
+    try mqueue_opts.append(allocator, "nosuid");
+    try mqueue_opts.append(allocator, "noexec");
+    try mqueue_opts.append(allocator, "nodev");
+    try mounts.append(allocator, Mount{
         .destination = "/dev/mqueue",
         .type = "mqueue",
         .source = "mqueue",
-        .options = try mqueue_opts.toOwnedSlice(),
+        .options = try mqueue_opts.toOwnedSlice(allocator),
     });
 
-    var sys_opts = std.ArrayList([]const u8).init(allocator);
-    try sys_opts.append("nosuid");
-    try sys_opts.append("noexec");
-    try sys_opts.append("nodev");
-    try sys_opts.append("ro");
-    try mounts.append(Mount{
+    var sys_opts: std.ArrayListUnmanaged([]const u8) = .{};
+    try sys_opts.append(allocator, "nosuid");
+    try sys_opts.append(allocator, "noexec");
+    try sys_opts.append(allocator, "nodev");
+    try sys_opts.append(allocator, "ro");
+    try mounts.append(allocator, Mount{
         .destination = "/sys",
         .type = "sysfs",
         .source = "sysfs",
-        .options = try sys_opts.toOwnedSlice(),
+        .options = try sys_opts.toOwnedSlice(allocator),
     });
 
-    var cgroup_opts = std.ArrayList([]const u8).init(allocator);
-    try cgroup_opts.append("nosuid");
-    try cgroup_opts.append("noexec");
-    try cgroup_opts.append("nodev");
-    try cgroup_opts.append("relatime");
-    try cgroup_opts.append("ro");
-    try mounts.append(Mount{
+    var cgroup_opts: std.ArrayListUnmanaged([]const u8) = .{};
+    try cgroup_opts.append(allocator, "nosuid");
+    try cgroup_opts.append(allocator, "noexec");
+    try cgroup_opts.append(allocator, "nodev");
+    try cgroup_opts.append(allocator, "relatime");
+    try cgroup_opts.append(allocator, "ro");
+    try mounts.append(allocator, Mount{
         .destination = "/sys/fs/cgroup",
         .type = "cgroup",
         .source = "cgroup",
-        .options = try cgroup_opts.toOwnedSlice(),
+        .options = try cgroup_opts.toOwnedSlice(allocator),
     });
 
-    return mounts.toOwnedSlice();
+    return mounts.toOwnedSlice(allocator);
 }

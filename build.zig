@@ -9,21 +9,18 @@ pub fn build(b: *std.Build) void {
     const target = b.standardTargetOptions(.{});
     const optimize = b.standardOptimizeOption(.{});
 
-    // add library
-    const lib = b.addStaticLibrary(.{
-        .name = "ocispec",
-        // In this case the main source file is merely a path, however, in more
-        // complicated build scripts, this could be a generated file.
-        .root_source_file = b.path("src/distribution/lib.zig"),
-        .target = target,
-        .optimize = optimize,
-        .single_threaded = false,
-    });
-
-    b.installArtifact(lib);
-
     const oci_spec_module = b.addModule("ocispec", .{
         .root_source_file = b.path("src/lib.zig"),
+    });
+
+    // Library object for documentation generation
+    const lib = b.addObject(.{
+        .name = "ocispec",
+        .root_module = b.createModule(.{
+            .root_source_file = b.path("src/lib.zig"),
+            .target = target,
+            .optimize = optimize,
+        }),
     });
 
     // step generate docs
@@ -46,9 +43,11 @@ pub fn build(b: *std.Build) void {
     }) |example_name| {
         const example = b.addExecutable(.{
             .name = example_name,
-            .root_source_file = b.path(b.fmt("examples/{s}.zig", .{example_name})),
-            .target = target,
-            .optimize = optimize,
+            .root_module = b.createModule(.{
+                .root_source_file = b.path(b.fmt("examples/{s}.zig", .{example_name})),
+                .target = target,
+                .optimize = optimize,
+            }),
         });
 
         example.root_module.addImport("ocispec", oci_spec_module);
@@ -56,26 +55,25 @@ pub fn build(b: *std.Build) void {
     }
 
     // step run tests
-    const lib_unit_tests = b.addTest(.{
-        // Assuming this needs to be the same root file as the library,
-        // since it's the library we're building tests for?
+    const test_module = b.createModule(.{
         .root_source_file = b.path("tests/lib.zig"),
         .target = target,
         .optimize = optimize,
     });
-    lib_unit_tests.root_module.addImport("ocispec", oci_spec_module);
+    test_module.addImport("ocispec", oci_spec_module);
+    const lib_unit_tests = b.addTest(.{
+        .root_module = test_module,
+    });
 
     const run_lib_unit_tests = b.addRunArtifact(lib_unit_tests);
 
     const test_step = b.step("test", "Run unit tests");
     test_step.dependOn(&run_lib_unit_tests.step);
 
-    // step generate code cov
+    // step generate code coverage
     const cov_step = b.step("cov", "Generate code coverage");
-
     const cov_run = b.addSystemCommand(&.{ "kcov", "--clean", "--include-pattern=src/", ".coverage/" });
     cov_run.addArtifactArg(lib_unit_tests);
-
     cov_step.dependOn(&cov_run.step);
 
     // step check formatting

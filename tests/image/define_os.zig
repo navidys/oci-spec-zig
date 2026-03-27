@@ -5,112 +5,112 @@ const testing = std.testing;
 
 test "image define OS jsonStringify" {
     // AIX
-    var osAIXBuf = std.ArrayList(u8).init(testing.allocator);
-    defer osAIXBuf.deinit();
+    var osAIXBuf: std.ArrayList(u8) = .{};
+    defer osAIXBuf.deinit(testing.allocator);
 
-    try osimage.jsonStringify(&osimage.AIX, osAIXBuf.writer());
+    try osimage.jsonStringify(&osimage.AIX, osAIXBuf.writer(testing.allocator));
 
     // Android
-    var osAndroidBuf = std.ArrayList(u8).init(testing.allocator);
-    defer osAndroidBuf.deinit();
+    var osAndroidBuf: std.ArrayList(u8) = .{};
+    defer osAndroidBuf.deinit(testing.allocator);
 
-    try osimage.jsonStringify(&osimage.Android, osAndroidBuf.writer());
+    try osimage.jsonStringify(&osimage.Android, osAndroidBuf.writer(testing.allocator));
 
     // Darwin
-    var osDarwinBuf = std.ArrayList(u8).init(testing.allocator);
-    defer osDarwinBuf.deinit();
+    var osDarwinBuf: std.ArrayList(u8) = .{};
+    defer osDarwinBuf.deinit(testing.allocator);
 
-    try osimage.jsonStringify(&osimage.Darwin, osDarwinBuf.writer());
+    try osimage.jsonStringify(&osimage.Darwin, osDarwinBuf.writer(testing.allocator));
 
     // DragonFlyBSD
-    var osDragonflyBuf = std.ArrayList(u8).init(testing.allocator);
-    defer osDragonflyBuf.deinit();
+    var osDragonflyBuf: std.ArrayList(u8) = .{};
+    defer osDragonflyBuf.deinit(testing.allocator);
 
-    try osimage.jsonStringify(&osimage.DragonFlyBSD, osDragonflyBuf.writer());
+    try osimage.jsonStringify(&osimage.DragonFlyBSD, osDragonflyBuf.writer(testing.allocator));
 
     // FreeBSD
-    var osFreeBSDBuf = std.ArrayList(u8).init(testing.allocator);
-    defer osFreeBSDBuf.deinit();
+    var osFreeBSDBuf: std.ArrayList(u8) = .{};
+    defer osFreeBSDBuf.deinit(testing.allocator);
 
-    try osimage.jsonStringify(&osimage.FreeBSD, osFreeBSDBuf.writer());
+    try osimage.jsonStringify(&osimage.FreeBSD, osFreeBSDBuf.writer(testing.allocator));
 
     // Hurd
-    var osHurdBuf = std.ArrayList(u8).init(testing.allocator);
-    defer osHurdBuf.deinit();
+    var osHurdBuf: std.ArrayList(u8) = .{};
+    defer osHurdBuf.deinit(testing.allocator);
 
-    try osimage.jsonStringify(&osimage.Hurd, osHurdBuf.writer());
+    try osimage.jsonStringify(&osimage.Hurd, osHurdBuf.writer(testing.allocator));
 
     // Illumos
-    var osIllumosBuf = std.ArrayList(u8).init(testing.allocator);
-    defer osIllumosBuf.deinit();
+    var osIllumosBuf: std.ArrayList(u8) = .{};
+    defer osIllumosBuf.deinit(testing.allocator);
 
-    try osimage.jsonStringify(&osimage.Illumos, osIllumosBuf.writer());
+    try osimage.jsonStringify(&osimage.Illumos, osIllumosBuf.writer(testing.allocator));
 
     // IOS
-    var osIOSBuf = std.ArrayList(u8).init(testing.allocator);
-    defer osIOSBuf.deinit();
+    var osIOSBuf: std.ArrayList(u8) = .{};
+    defer osIOSBuf.deinit(testing.allocator);
 
-    try osimage.jsonStringify(&osimage.IOS, osIOSBuf.writer());
+    try osimage.jsonStringify(&osimage.IOS, osIOSBuf.writer(testing.allocator));
 
     // Js
-    var osJsBuf = std.ArrayList(u8).init(testing.allocator);
-    defer osJsBuf.deinit();
+    var osJsBuf: std.ArrayList(u8) = .{};
+    defer osJsBuf.deinit(testing.allocator);
 
-    try osimage.jsonStringify(&osimage.Js, osJsBuf.writer());
+    try osimage.jsonStringify(&osimage.Js, osJsBuf.writer(testing.allocator));
 
     // Linux
-    var osLinuxBuf = std.ArrayList(u8).init(testing.allocator);
-    defer osLinuxBuf.deinit();
+    var osLinuxBuf: std.ArrayList(u8) = .{};
+    defer osLinuxBuf.deinit(testing.allocator);
 
-    try osimage.jsonStringify(&osimage.Linux, osLinuxBuf.writer());
+    try osimage.jsonStringify(&osimage.Linux, osLinuxBuf.writer(testing.allocator));
 
     // Nacl
-    var osNaclBuf = std.ArrayList(u8).init(testing.allocator);
-    defer osNaclBuf.deinit();
+    var osNaclBuf: std.ArrayList(u8) = .{};
+    defer osNaclBuf.deinit(testing.allocator);
 
-    try osimage.jsonStringify(&osimage.Nacl, osNaclBuf.writer());
+    try osimage.jsonStringify(&osimage.Nacl, osNaclBuf.writer(testing.allocator));
 
     // NetBSD
-    var osNetBSDBuf = std.ArrayList(u8).init(testing.allocator);
-    defer osNetBSDBuf.deinit();
+    var osNetBSDBuf: std.ArrayList(u8) = .{};
+    defer osNetBSDBuf.deinit(testing.allocator);
 
-    try osimage.jsonStringify(&osimage.NetBSD, osNetBSDBuf.writer());
+    try osimage.jsonStringify(&osimage.NetBSD, osNetBSDBuf.writer(testing.allocator));
 
     // OpenBSD
-    var osOpenBSDBuf = std.ArrayList(u8).init(testing.allocator);
-    defer osOpenBSDBuf.deinit();
+    var osOpenBSDBuf: std.ArrayList(u8) = .{};
+    defer osOpenBSDBuf.deinit(testing.allocator);
 
-    try osimage.jsonStringify(&osimage.OpenBSD, osOpenBSDBuf.writer());
+    try osimage.jsonStringify(&osimage.OpenBSD, osOpenBSDBuf.writer(testing.allocator));
 
     // Plan9
-    var osPlan9Buf = std.ArrayList(u8).init(testing.allocator);
-    defer osPlan9Buf.deinit();
+    var osPlan9Buf: std.ArrayList(u8) = .{};
+    defer osPlan9Buf.deinit(testing.allocator);
 
-    try osimage.jsonStringify(&osimage.Plan9, osPlan9Buf.writer());
+    try osimage.jsonStringify(&osimage.Plan9, osPlan9Buf.writer(testing.allocator));
 
     // Solaris
-    var osSolarisBuf = std.ArrayList(u8).init(testing.allocator);
-    defer osSolarisBuf.deinit();
+    var osSolarisBuf: std.ArrayList(u8) = .{};
+    defer osSolarisBuf.deinit(testing.allocator);
 
-    try osimage.jsonStringify(&osimage.Solaris, osSolarisBuf.writer());
+    try osimage.jsonStringify(&osimage.Solaris, osSolarisBuf.writer(testing.allocator));
 
     // Windows
-    var osWindowsBuf = std.ArrayList(u8).init(testing.allocator);
-    defer osWindowsBuf.deinit();
+    var osWindowsBuf: std.ArrayList(u8) = .{};
+    defer osWindowsBuf.deinit(testing.allocator);
 
-    try osimage.jsonStringify(&osimage.Windows, osWindowsBuf.writer());
+    try osimage.jsonStringify(&osimage.Windows, osWindowsBuf.writer(testing.allocator));
 
     // ZOS
-    var osZOSBuf = std.ArrayList(u8).init(testing.allocator);
-    defer osZOSBuf.deinit();
+    var osZOSBuf: std.ArrayList(u8) = .{};
+    defer osZOSBuf.deinit(testing.allocator);
 
-    try osimage.jsonStringify(&osimage.ZOS, osZOSBuf.writer());
+    try osimage.jsonStringify(&osimage.ZOS, osZOSBuf.writer(testing.allocator));
 
     // Other
-    var osOtherBuf = std.ArrayList(u8).init(testing.allocator);
-    defer osOtherBuf.deinit();
+    var osOtherBuf: std.ArrayList(u8) = .{};
+    defer osOtherBuf.deinit(testing.allocator);
 
-    try osimage.jsonStringify(&osimage.Other, osOtherBuf.writer());
+    try osimage.jsonStringify(&osimage.Other, osOtherBuf.writer(testing.allocator));
 
     // test
     try testing.expectEqualStrings(osAIXBuf.items, "\"aix\"");

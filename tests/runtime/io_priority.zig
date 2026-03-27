@@ -54,22 +54,22 @@ test "runtime LinuxIOPriorityType jsonParse" {
 
 test "runtime LinuxSchedulerPolicy jsonStringify" {
     // IoprioClassRt
-    var rt = std.ArrayList(u8).init(testing.allocator);
-    defer rt.deinit();
+    var rt: std.ArrayList(u8) = .{};
+    defer rt.deinit(testing.allocator);
 
-    try iopriority.jsonStringify(&iopriority.IoprioClassRt, rt.writer());
+    try iopriority.jsonStringify(&iopriority.IoprioClassRt, rt.writer(testing.allocator));
 
     // IoprioClassBe
-    var be = std.ArrayList(u8).init(testing.allocator);
-    defer be.deinit();
+    var be: std.ArrayList(u8) = .{};
+    defer be.deinit(testing.allocator);
 
-    try iopriority.jsonStringify(&iopriority.IoprioClassBe, be.writer());
+    try iopriority.jsonStringify(&iopriority.IoprioClassBe, be.writer(testing.allocator));
 
     // IoprioClassIdle
-    var idle = std.ArrayList(u8).init(testing.allocator);
-    defer idle.deinit();
+    var idle: std.ArrayList(u8) = .{};
+    defer idle.deinit(testing.allocator);
 
-    try iopriority.jsonStringify(&iopriority.IoprioClassIdle, idle.writer());
+    try iopriority.jsonStringify(&iopriority.IoprioClassIdle, idle.writer(testing.allocator));
 
     // test
     try testing.expectEqualStrings(rt.items, "\"IOPRIO_CLASS_RT\"");

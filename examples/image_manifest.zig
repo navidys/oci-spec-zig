@@ -12,8 +12,8 @@ pub fn main() !void {
     const media_config = image.MediaType.ImageConfig;
     const media_layer = image.MediaType.ImageLayerGzip;
 
-    var mlayers = std.ArrayList(image.Descriptor).init(allocator);
-    try mlayers.append(image.Descriptor{
+    var mlayers: std.ArrayListUnmanaged(image.Descriptor) = .{};
+    try mlayers.append(allocator, image.Descriptor{
         .mediaType = media_layer,
         .digest = try image.Digest.initFromString(
             allocator,
@@ -22,7 +22,7 @@ pub fn main() !void {
         .size = 32654,
     });
 
-    const manifest_layers: []image.Descriptor = try mlayers.toOwnedSlice();
+    const manifest_layers: []image.Descriptor = try mlayers.toOwnedSlice(allocator);
 
     const manifest = image.Manifest{
         .mediaType = media_manifest,
@@ -39,11 +39,9 @@ pub fn main() !void {
 
     const manifest_content = try manifest.toStringPretty(allocator);
 
-    const stdout_file = std.io.getStdOut().writer();
-    var bw = std.io.bufferedWriter(stdout_file);
-    const stdout = bw.writer();
+    var write_buf: [4096]u8 = undefined;
+    var stdout = std.fs.File.stdout().writer(&write_buf);
+    try stdout.interface.print("{s}\n", .{manifest_content});
+    stdout.interface.flush() catch {};
 
-    try stdout.print("{s}\n", .{manifest_content});
-
-    try bw.flush();
 }

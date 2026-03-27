@@ -219,88 +219,88 @@ test "image define OS jsonParse" {
 
 test "image define MediaType jsonStringify" {
     // Descriptor
-    var bufDesc = std.ArrayList(u8).init(testing.allocator);
-    defer bufDesc.deinit();
+    var bufDesc: std.ArrayList(u8) = .{};
+    defer bufDesc.deinit(testing.allocator);
 
-    try imgtype.jsonStringify(&imgtype.Descriptor, bufDesc.writer());
+    try imgtype.jsonStringify(&imgtype.Descriptor, bufDesc.writer(testing.allocator));
 
     // LayoutHeader
-    var bufLayoutHeader = std.ArrayList(u8).init(testing.allocator);
-    defer bufLayoutHeader.deinit();
+    var bufLayoutHeader: std.ArrayList(u8) = .{};
+    defer bufLayoutHeader.deinit(testing.allocator);
 
-    try imgtype.jsonStringify(&imgtype.LayoutHeader, bufLayoutHeader.writer());
+    try imgtype.jsonStringify(&imgtype.LayoutHeader, bufLayoutHeader.writer(testing.allocator));
 
     // ImageManifest
-    var bugImgManifest = std.ArrayList(u8).init(testing.allocator);
-    defer bugImgManifest.deinit();
+    var bugImgManifest: std.ArrayList(u8) = .{};
+    defer bugImgManifest.deinit(testing.allocator);
 
-    try imgtype.jsonStringify(&imgtype.ImageManifest, bugImgManifest.writer());
+    try imgtype.jsonStringify(&imgtype.ImageManifest, bugImgManifest.writer(testing.allocator));
 
     // ImageIndex
-    var bufImgIndex = std.ArrayList(u8).init(testing.allocator);
-    defer bufImgIndex.deinit();
+    var bufImgIndex: std.ArrayList(u8) = .{};
+    defer bufImgIndex.deinit(testing.allocator);
 
-    try imgtype.jsonStringify(&imgtype.ImageIndex, bufImgIndex.writer());
+    try imgtype.jsonStringify(&imgtype.ImageIndex, bufImgIndex.writer(testing.allocator));
 
     // ImageLayer
-    var bufImgLayer = std.ArrayList(u8).init(testing.allocator);
-    defer bufImgLayer.deinit();
+    var bufImgLayer: std.ArrayList(u8) = .{};
+    defer bufImgLayer.deinit(testing.allocator);
 
-    try imgtype.jsonStringify(&imgtype.ImageLayer, bufImgLayer.writer());
+    try imgtype.jsonStringify(&imgtype.ImageLayer, bufImgLayer.writer(testing.allocator));
 
     // ImageLayerGzip
-    var bugImgLayerGzip = std.ArrayList(u8).init(testing.allocator);
-    defer bugImgLayerGzip.deinit();
+    var bugImgLayerGzip: std.ArrayList(u8) = .{};
+    defer bugImgLayerGzip.deinit(testing.allocator);
 
-    try imgtype.jsonStringify(&imgtype.ImageLayerGzip, bugImgLayerGzip.writer());
+    try imgtype.jsonStringify(&imgtype.ImageLayerGzip, bugImgLayerGzip.writer(testing.allocator));
 
     // ImageLayerZstd
-    var bufImgLayerZstd = std.ArrayList(u8).init(testing.allocator);
-    defer bufImgLayerZstd.deinit();
+    var bufImgLayerZstd: std.ArrayList(u8) = .{};
+    defer bufImgLayerZstd.deinit(testing.allocator);
 
-    try imgtype.jsonStringify(&imgtype.ImageLayerZstd, bufImgLayerZstd.writer());
+    try imgtype.jsonStringify(&imgtype.ImageLayerZstd, bufImgLayerZstd.writer(testing.allocator));
 
     // ImageLayerNonDistributable
-    var bufImgLayerNonDist = std.ArrayList(u8).init(testing.allocator);
-    defer bufImgLayerNonDist.deinit();
+    var bufImgLayerNonDist: std.ArrayList(u8) = .{};
+    defer bufImgLayerNonDist.deinit(testing.allocator);
 
-    try imgtype.jsonStringify(&imgtype.ImageLayerNonDistributable, bufImgLayerNonDist.writer());
+    try imgtype.jsonStringify(&imgtype.ImageLayerNonDistributable, bufImgLayerNonDist.writer(testing.allocator));
 
     // ImageLayerNonDistributableGzip
-    var bufImgLayerNonDistGzip = std.ArrayList(u8).init(testing.allocator);
-    defer bufImgLayerNonDistGzip.deinit();
+    var bufImgLayerNonDistGzip: std.ArrayList(u8) = .{};
+    defer bufImgLayerNonDistGzip.deinit(testing.allocator);
 
-    try imgtype.jsonStringify(&imgtype.ImageLayerNonDistributableGzip, bufImgLayerNonDistGzip.writer());
+    try imgtype.jsonStringify(&imgtype.ImageLayerNonDistributableGzip, bufImgLayerNonDistGzip.writer(testing.allocator));
 
     // ImageLayerNonDistributableZstd
-    var bufImgLayerNonDistZstd = std.ArrayList(u8).init(testing.allocator);
-    defer bufImgLayerNonDistZstd.deinit();
+    var bufImgLayerNonDistZstd: std.ArrayList(u8) = .{};
+    defer bufImgLayerNonDistZstd.deinit(testing.allocator);
 
-    try imgtype.jsonStringify(&imgtype.ImageLayerNonDistributableZstd, bufImgLayerNonDistZstd.writer());
+    try imgtype.jsonStringify(&imgtype.ImageLayerNonDistributableZstd, bufImgLayerNonDistZstd.writer(testing.allocator));
 
     // ImageConfig
-    var bufImgConfig = std.ArrayList(u8).init(testing.allocator);
-    defer bufImgConfig.deinit();
+    var bufImgConfig: std.ArrayList(u8) = .{};
+    defer bufImgConfig.deinit(testing.allocator);
 
-    try imgtype.jsonStringify(&imgtype.ImageConfig, bufImgConfig.writer());
+    try imgtype.jsonStringify(&imgtype.ImageConfig, bufImgConfig.writer(testing.allocator));
 
     // ArtifactManifest
-    var bufArtManifest = std.ArrayList(u8).init(testing.allocator);
-    defer bufArtManifest.deinit();
+    var bufArtManifest: std.ArrayList(u8) = .{};
+    defer bufArtManifest.deinit(testing.allocator);
 
-    try imgtype.jsonStringify(&imgtype.ArtifactManifest, bufArtManifest.writer());
+    try imgtype.jsonStringify(&imgtype.ArtifactManifest, bufArtManifest.writer(testing.allocator));
 
     // EmptyJSON
-    var bufEmptyJson = std.ArrayList(u8).init(testing.allocator);
-    defer bufEmptyJson.deinit();
+    var bufEmptyJson: std.ArrayList(u8) = .{};
+    defer bufEmptyJson.deinit(testing.allocator);
 
-    try imgtype.jsonStringify(&imgtype.EmptyJSON, bufEmptyJson.writer());
+    try imgtype.jsonStringify(&imgtype.EmptyJSON, bufEmptyJson.writer(testing.allocator));
 
     // Other
-    var bufOther = std.ArrayList(u8).init(testing.allocator);
-    defer bufOther.deinit();
+    var bufOther: std.ArrayList(u8) = .{};
+    defer bufOther.deinit(testing.allocator);
 
-    try imgtype.jsonStringify(&imgtype.Other, bufOther.writer());
+    try imgtype.jsonStringify(&imgtype.Other, bufOther.writer(testing.allocator));
 
     // test
     try testing.expectEqualStrings(bufDesc.items, "\"application/vnd.oci.descriptor\"");

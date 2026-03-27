@@ -114,46 +114,46 @@ test "runtime LinuxSchedulerFlag jsonParse" {
 
 test "runtime LinuxSchedulerFlag jsonStringify" {
     // SchedResetOnFork
-    var resetOnFork = std.ArrayList(u8).init(testing.allocator);
-    defer resetOnFork.deinit();
+    var resetOnFork: std.ArrayList(u8) = .{};
+    defer resetOnFork.deinit(testing.allocator);
 
-    try schedFlag.jsonStringify(&schedFlag.SchedResetOnFork, resetOnFork.writer());
+    try schedFlag.jsonStringify(&schedFlag.SchedResetOnFork, resetOnFork.writer(testing.allocator));
 
     // SchedFlagReclaim
-    var reclaim = std.ArrayList(u8).init(testing.allocator);
-    defer reclaim.deinit();
+    var reclaim: std.ArrayList(u8) = .{};
+    defer reclaim.deinit(testing.allocator);
 
-    try schedFlag.jsonStringify(&schedFlag.SchedFlagReclaim, reclaim.writer());
+    try schedFlag.jsonStringify(&schedFlag.SchedFlagReclaim, reclaim.writer(testing.allocator));
 
     // SchedFlagDLOverrun
-    var overrun = std.ArrayList(u8).init(testing.allocator);
-    defer overrun.deinit();
+    var overrun: std.ArrayList(u8) = .{};
+    defer overrun.deinit(testing.allocator);
 
-    try schedFlag.jsonStringify(&schedFlag.SchedFlagDLOverrun, overrun.writer());
+    try schedFlag.jsonStringify(&schedFlag.SchedFlagDLOverrun, overrun.writer(testing.allocator));
 
     // SchedFlagKeepPolicy
-    var keepPolicy = std.ArrayList(u8).init(testing.allocator);
-    defer keepPolicy.deinit();
+    var keepPolicy: std.ArrayList(u8) = .{};
+    defer keepPolicy.deinit(testing.allocator);
 
-    try schedFlag.jsonStringify(&schedFlag.SchedFlagKeepPolicy, keepPolicy.writer());
+    try schedFlag.jsonStringify(&schedFlag.SchedFlagKeepPolicy, keepPolicy.writer(testing.allocator));
 
     // SchedFlagKeepParams
-    var keepParam = std.ArrayList(u8).init(testing.allocator);
-    defer keepParam.deinit();
+    var keepParam: std.ArrayList(u8) = .{};
+    defer keepParam.deinit(testing.allocator);
 
-    try schedFlag.jsonStringify(&schedFlag.SchedFlagKeepParams, keepParam.writer());
+    try schedFlag.jsonStringify(&schedFlag.SchedFlagKeepParams, keepParam.writer(testing.allocator));
 
     // SchedFlagUtilClampMin
-    var clammin = std.ArrayList(u8).init(testing.allocator);
-    defer clammin.deinit();
+    var clammin: std.ArrayList(u8) = .{};
+    defer clammin.deinit(testing.allocator);
 
-    try schedFlag.jsonStringify(&schedFlag.SchedFlagUtilClampMin, clammin.writer());
+    try schedFlag.jsonStringify(&schedFlag.SchedFlagUtilClampMin, clammin.writer(testing.allocator));
 
     // SchedFlagUtilClampMax
-    var clammax = std.ArrayList(u8).init(testing.allocator);
-    defer clammax.deinit();
+    var clammax: std.ArrayList(u8) = .{};
+    defer clammax.deinit(testing.allocator);
 
-    try schedFlag.jsonStringify(&schedFlag.SchedFlagUtilClampMax, clammax.writer());
+    try schedFlag.jsonStringify(&schedFlag.SchedFlagUtilClampMax, clammax.writer(testing.allocator));
 
     // test
     try testing.expectEqualStrings(resetOnFork.items, "\"SCHED_FLAG_RESET_ON_FORK\"");
