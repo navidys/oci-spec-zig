@@ -2,17 +2,14 @@ const std = @import("std");
 const ocispec = @import("ocispec");
 const image = ocispec.image;
 
-pub fn main() !void {
-    var arena = std.heap.ArenaAllocator.init(std.heap.page_allocator);
-    defer arena.deinit();
-
-    const allocator = arena.allocator();
+pub fn main(init: std.process.Init) !void {
+    const allocator = init.arena.allocator();
 
     const media_manifest = image.MediaType.ImageManifest;
     const media_config = image.MediaType.ImageConfig;
     const media_layer = image.MediaType.ImageLayerGzip;
 
-    var mlayers: std.ArrayListUnmanaged(image.Descriptor) = .{};
+    var mlayers: std.ArrayListUnmanaged(image.Descriptor) = .empty;
     try mlayers.append(allocator, image.Descriptor{
         .mediaType = media_layer,
         .digest = try image.Digest.initFromString(
@@ -23,6 +20,7 @@ pub fn main() !void {
     });
 
     const manifest_layers: []image.Descriptor = try mlayers.toOwnedSlice(allocator);
+    defer allocator.free(manifest_layers);
 
     const manifest = image.Manifest{
         .mediaType = media_manifest,
@@ -38,10 +36,13 @@ pub fn main() !void {
     };
 
     const manifest_content = try manifest.toStringPretty(allocator);
+    defer allocator.free(manifest_content);
 
     var write_buf: [4096]u8 = undefined;
-    var stdout = std.fs.File.stdout().writer(&write_buf);
-    try stdout.interface.print("{s}\n", .{manifest_content});
-    stdout.interface.flush() catch {};
 
+    var stdout_wrtiter = std.Io.File.stdout().writer(init.io, &write_buf);
+    const stdout = &stdout_wrtiter.interface;
+
+    try stdout.print("{s}\n", .{manifest_content});
+    stdout.flush() catch {};
 }

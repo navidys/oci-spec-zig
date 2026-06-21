@@ -114,53 +114,53 @@ test "runtime LinuxSchedulerFlag jsonParse" {
 
 test "runtime LinuxSchedulerFlag jsonStringify" {
     // SchedResetOnFork
-    var resetOnFork: std.ArrayList(u8) = .{};
-    defer resetOnFork.deinit(testing.allocator);
+    var resetOnFork: std.Io.Writer.Allocating = .init(testing.allocator);
+    defer resetOnFork.deinit();
 
-    try schedFlag.jsonStringify(&schedFlag.SchedResetOnFork, resetOnFork.writer(testing.allocator));
+    try schedFlag.jsonStringify(&schedFlag.SchedResetOnFork, &resetOnFork.writer);
 
     // SchedFlagReclaim
-    var reclaim: std.ArrayList(u8) = .{};
-    defer reclaim.deinit(testing.allocator);
+    var reclaim: std.Io.Writer.Allocating = .init(testing.allocator);
+    defer reclaim.deinit();
 
-    try schedFlag.jsonStringify(&schedFlag.SchedFlagReclaim, reclaim.writer(testing.allocator));
+    try schedFlag.jsonStringify(&schedFlag.SchedFlagReclaim, &reclaim.writer);
 
     // SchedFlagDLOverrun
-    var overrun: std.ArrayList(u8) = .{};
-    defer overrun.deinit(testing.allocator);
+    var overrun: std.Io.Writer.Allocating = .init(testing.allocator);
+    defer overrun.deinit();
 
-    try schedFlag.jsonStringify(&schedFlag.SchedFlagDLOverrun, overrun.writer(testing.allocator));
+    try schedFlag.jsonStringify(&schedFlag.SchedFlagDLOverrun, &overrun.writer);
 
     // SchedFlagKeepPolicy
-    var keepPolicy: std.ArrayList(u8) = .{};
-    defer keepPolicy.deinit(testing.allocator);
+    var keepPolicy: std.Io.Writer.Allocating = .init(testing.allocator);
+    defer keepPolicy.deinit();
 
-    try schedFlag.jsonStringify(&schedFlag.SchedFlagKeepPolicy, keepPolicy.writer(testing.allocator));
+    try schedFlag.jsonStringify(&schedFlag.SchedFlagKeepPolicy, &keepPolicy.writer);
 
     // SchedFlagKeepParams
-    var keepParam: std.ArrayList(u8) = .{};
-    defer keepParam.deinit(testing.allocator);
+    var keepParam: std.Io.Writer.Allocating = .init(testing.allocator);
+    defer keepParam.deinit();
 
-    try schedFlag.jsonStringify(&schedFlag.SchedFlagKeepParams, keepParam.writer(testing.allocator));
+    try schedFlag.jsonStringify(&schedFlag.SchedFlagKeepParams, &keepParam.writer);
 
     // SchedFlagUtilClampMin
-    var clammin: std.ArrayList(u8) = .{};
-    defer clammin.deinit(testing.allocator);
+    var clammin: std.Io.Writer.Allocating = .init(testing.allocator);
+    defer clammin.deinit();
 
-    try schedFlag.jsonStringify(&schedFlag.SchedFlagUtilClampMin, clammin.writer(testing.allocator));
+    try schedFlag.jsonStringify(&schedFlag.SchedFlagUtilClampMin, &clammin.writer);
 
     // SchedFlagUtilClampMax
-    var clammax: std.ArrayList(u8) = .{};
-    defer clammax.deinit(testing.allocator);
+    var clammax: std.Io.Writer.Allocating = .init(testing.allocator);
+    defer clammax.deinit();
 
-    try schedFlag.jsonStringify(&schedFlag.SchedFlagUtilClampMax, clammax.writer(testing.allocator));
+    try schedFlag.jsonStringify(&schedFlag.SchedFlagUtilClampMax, &clammax.writer);
 
     // test
-    try testing.expectEqualStrings(resetOnFork.items, "\"SCHED_FLAG_RESET_ON_FORK\"");
-    try testing.expectEqualStrings(reclaim.items, "\"SCHED_FLAG_RECLAIM\"");
-    try testing.expectEqualStrings(overrun.items, "\"SCHED_FLAG_DL_OVERRUN\"");
-    try testing.expectEqualStrings(keepPolicy.items, "\"SCHED_FLAG_KEEP_POLICY\"");
-    try testing.expectEqualStrings(keepParam.items, "\"SCHED_FLAG_KEEP_PARAMS\"");
-    try testing.expectEqualStrings(clammin.items, "\"SCHED_FLAG_UTIL_CLAMP_MIN\"");
-    try testing.expectEqualStrings(clammax.items, "\"SCHED_FLAG_UTIL_CLAMP_MAX\"");
+    try testing.expectEqualStrings(resetOnFork.written(), "\"SCHED_FLAG_RESET_ON_FORK\"");
+    try testing.expectEqualStrings(reclaim.written(), "\"SCHED_FLAG_RECLAIM\"");
+    try testing.expectEqualStrings(overrun.written(), "\"SCHED_FLAG_DL_OVERRUN\"");
+    try testing.expectEqualStrings(keepPolicy.written(), "\"SCHED_FLAG_KEEP_POLICY\"");
+    try testing.expectEqualStrings(keepParam.written(), "\"SCHED_FLAG_KEEP_PARAMS\"");
+    try testing.expectEqualStrings(clammin.written(), "\"SCHED_FLAG_UTIL_CLAMP_MIN\"");
+    try testing.expectEqualStrings(clammax.written(), "\"SCHED_FLAG_UTIL_CLAMP_MAX\"");
 }

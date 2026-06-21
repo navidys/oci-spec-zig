@@ -54,25 +54,25 @@ test "runtime LinuxIOPriorityType jsonParse" {
 
 test "runtime LinuxSchedulerPolicy jsonStringify" {
     // IoprioClassRt
-    var rt: std.ArrayList(u8) = .{};
-    defer rt.deinit(testing.allocator);
+    var rt: std.Io.Writer.Allocating = .init(testing.allocator);
+    defer rt.deinit();
 
-    try iopriority.jsonStringify(&iopriority.IoprioClassRt, rt.writer(testing.allocator));
+    try iopriority.jsonStringify(&iopriority.IoprioClassRt, &rt.writer);
 
     // IoprioClassBe
-    var be: std.ArrayList(u8) = .{};
-    defer be.deinit(testing.allocator);
+    var be: std.Io.Writer.Allocating = .init(testing.allocator);
+    defer be.deinit();
 
-    try iopriority.jsonStringify(&iopriority.IoprioClassBe, be.writer(testing.allocator));
+    try iopriority.jsonStringify(&iopriority.IoprioClassBe, &be.writer);
 
     // IoprioClassIdle
-    var idle: std.ArrayList(u8) = .{};
-    defer idle.deinit(testing.allocator);
+    var idle: std.Io.Writer.Allocating = .init(testing.allocator);
+    defer idle.deinit();
 
-    try iopriority.jsonStringify(&iopriority.IoprioClassIdle, idle.writer(testing.allocator));
+    try iopriority.jsonStringify(&iopriority.IoprioClassIdle, &idle.writer);
 
     // test
-    try testing.expectEqualStrings(rt.items, "\"IOPRIO_CLASS_RT\"");
-    try testing.expectEqualStrings(be.items, "\"IOPRIO_CLASS_BE\"");
-    try testing.expectEqualStrings(idle.items, "\"IOPRIO_CLASS_IDLE\"");
+    try testing.expectEqualStrings(rt.written(), "\"IOPRIO_CLASS_RT\"");
+    try testing.expectEqualStrings(be.written(), "\"IOPRIO_CLASS_BE\"");
+    try testing.expectEqualStrings(idle.written(), "\"IOPRIO_CLASS_IDLE\"");
 }

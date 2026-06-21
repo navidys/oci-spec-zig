@@ -114,53 +114,53 @@ test "runtime LinuxSchedulerPolicy jsonParse" {
 
 test "runtime LinuxSchedulerPolicy jsonStringify" {
     // SchedOther
-    var other: std.ArrayList(u8) = .{};
-    defer other.deinit(testing.allocator);
+    var other: std.Io.Writer.Allocating = .init(testing.allocator);
+    defer other.deinit();
 
-    try policy.jsonStringify(&policy.SchedOther, other.writer(testing.allocator));
+    try policy.jsonStringify(&policy.SchedOther, &other.writer);
 
     // SchedFifo
-    var fifo: std.ArrayList(u8) = .{};
-    defer fifo.deinit(testing.allocator);
+    var fifo: std.Io.Writer.Allocating = .init(testing.allocator);
+    defer fifo.deinit();
 
-    try policy.jsonStringify(&policy.SchedFifo, fifo.writer(testing.allocator));
+    try policy.jsonStringify(&policy.SchedFifo, &fifo.writer);
 
     // SchedRr
-    var rr: std.ArrayList(u8) = .{};
-    defer rr.deinit(testing.allocator);
+    var rr: std.Io.Writer.Allocating = .init(testing.allocator);
+    defer rr.deinit();
 
-    try policy.jsonStringify(&policy.SchedRr, rr.writer(testing.allocator));
+    try policy.jsonStringify(&policy.SchedRr, &rr.writer);
 
     // SchedBatch
-    var batch: std.ArrayList(u8) = .{};
-    defer batch.deinit(testing.allocator);
+    var batch: std.Io.Writer.Allocating = .init(testing.allocator);
+    defer batch.deinit();
 
-    try policy.jsonStringify(&policy.SchedBatch, batch.writer(testing.allocator));
+    try policy.jsonStringify(&policy.SchedBatch, &batch.writer);
 
     // SchedIso
-    var iso: std.ArrayList(u8) = .{};
-    defer iso.deinit(testing.allocator);
+    var iso: std.Io.Writer.Allocating = .init(testing.allocator);
+    defer iso.deinit();
 
-    try policy.jsonStringify(&policy.SchedIso, iso.writer(testing.allocator));
+    try policy.jsonStringify(&policy.SchedIso, &iso.writer);
 
     // SchedIdle
-    var idle: std.ArrayList(u8) = .{};
-    defer idle.deinit(testing.allocator);
+    var idle: std.Io.Writer.Allocating = .init(testing.allocator);
+    defer idle.deinit();
 
-    try policy.jsonStringify(&policy.SchedIdle, idle.writer(testing.allocator));
+    try policy.jsonStringify(&policy.SchedIdle, &idle.writer);
 
     // SchedDeadline
-    var deadline: std.ArrayList(u8) = .{};
-    defer deadline.deinit(testing.allocator);
+    var deadline: std.Io.Writer.Allocating = .init(testing.allocator);
+    defer deadline.deinit();
 
-    try policy.jsonStringify(&policy.SchedDeadline, deadline.writer(testing.allocator));
+    try policy.jsonStringify(&policy.SchedDeadline, &deadline.writer);
 
     // test
-    try testing.expectEqualStrings(other.items, "\"SCHED_OTHER\"");
-    try testing.expectEqualStrings(fifo.items, "\"SCHED_FIFO\"");
-    try testing.expectEqualStrings(rr.items, "\"SCHED_RR\"");
-    try testing.expectEqualStrings(batch.items, "\"SCHED_BATCH\"");
-    try testing.expectEqualStrings(iso.items, "\"SCHED_ISO\"");
-    try testing.expectEqualStrings(idle.items, "\"SCHED_IDLE\"");
-    try testing.expectEqualStrings(deadline.items, "\"SCHED_DEADLINE\"");
+    try testing.expectEqualStrings(other.written(), "\"SCHED_OTHER\"");
+    try testing.expectEqualStrings(fifo.written(), "\"SCHED_FIFO\"");
+    try testing.expectEqualStrings(rr.written(), "\"SCHED_RR\"");
+    try testing.expectEqualStrings(batch.written(), "\"SCHED_BATCH\"");
+    try testing.expectEqualStrings(iso.written(), "\"SCHED_ISO\"");
+    try testing.expectEqualStrings(idle.written(), "\"SCHED_IDLE\"");
+    try testing.expectEqualStrings(deadline.written(), "\"SCHED_DEADLINE\"");
 }

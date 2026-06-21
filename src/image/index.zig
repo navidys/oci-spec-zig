@@ -40,8 +40,9 @@ pub const Index = struct {
     annotations: ?std.json.ArrayHashMap([]const u8) = null,
 
     /// Attempts to load the image index from file.
-    pub fn initFromFile(allocator: Allocator, file_path: []const u8) !Index {
+    pub fn initFromFile(allocator: Allocator, file_path: []const u8) !std.json.Parsed(Index) {
         const content = try utils.readFileContent(allocator, file_path);
+        defer allocator.free(content);
 
         const parsed = try std.json.parseFromSlice(
             Index,
@@ -50,7 +51,7 @@ pub const Index = struct {
             .{ .allocate = .alloc_always, .ignore_unknown_fields = true },
         );
 
-        return parsed.value;
+        return parsed;
     }
 
     /// Attempts to write the image index to a string as JSON.

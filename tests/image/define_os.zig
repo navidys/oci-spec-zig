@@ -4,133 +4,138 @@ const osimage = ocispec.image.OS;
 const testing = std.testing;
 
 test "image define OS jsonStringify" {
-    // AIX
-    var osAIXBuf: std.ArrayList(u8) = .{};
-    defer osAIXBuf.deinit(testing.allocator);
+    var arena = std.heap.ArenaAllocator.init(std.heap.page_allocator);
+    defer arena.deinit();
 
-    try osimage.jsonStringify(&osimage.AIX, osAIXBuf.writer(testing.allocator));
+    const allocator = arena.allocator();
+
+    // AIX
+    var osAIXBuf: std.Io.Writer.Allocating = .init(allocator);
+    defer osAIXBuf.deinit();
+
+    try osimage.jsonStringify(&osimage.AIX, &osAIXBuf.writer);
 
     // Android
-    var osAndroidBuf: std.ArrayList(u8) = .{};
-    defer osAndroidBuf.deinit(testing.allocator);
+    var osAndroidBuf: std.Io.Writer.Allocating = .init(allocator);
+    defer osAndroidBuf.deinit();
 
-    try osimage.jsonStringify(&osimage.Android, osAndroidBuf.writer(testing.allocator));
+    try osimage.jsonStringify(&osimage.Android, &osAndroidBuf.writer);
 
     // Darwin
-    var osDarwinBuf: std.ArrayList(u8) = .{};
-    defer osDarwinBuf.deinit(testing.allocator);
+    var osDarwinBuf: std.Io.Writer.Allocating = .init(allocator);
+    defer osDarwinBuf.deinit();
 
-    try osimage.jsonStringify(&osimage.Darwin, osDarwinBuf.writer(testing.allocator));
+    try osimage.jsonStringify(&osimage.Darwin, &osDarwinBuf.writer);
 
     // DragonFlyBSD
-    var osDragonflyBuf: std.ArrayList(u8) = .{};
-    defer osDragonflyBuf.deinit(testing.allocator);
+    var osDragonflyBuf: std.Io.Writer.Allocating = .init(allocator);
+    defer osDragonflyBuf.deinit();
 
-    try osimage.jsonStringify(&osimage.DragonFlyBSD, osDragonflyBuf.writer(testing.allocator));
+    try osimage.jsonStringify(&osimage.DragonFlyBSD, &osDragonflyBuf.writer);
 
     // FreeBSD
-    var osFreeBSDBuf: std.ArrayList(u8) = .{};
-    defer osFreeBSDBuf.deinit(testing.allocator);
+    var osFreeBSDBuf: std.Io.Writer.Allocating = .init(allocator);
+    defer osFreeBSDBuf.deinit();
 
-    try osimage.jsonStringify(&osimage.FreeBSD, osFreeBSDBuf.writer(testing.allocator));
+    try osimage.jsonStringify(&osimage.FreeBSD, &osFreeBSDBuf.writer);
 
     // Hurd
-    var osHurdBuf: std.ArrayList(u8) = .{};
-    defer osHurdBuf.deinit(testing.allocator);
+    var osHurdBuf: std.Io.Writer.Allocating = .init(allocator);
+    defer osHurdBuf.deinit();
 
-    try osimage.jsonStringify(&osimage.Hurd, osHurdBuf.writer(testing.allocator));
+    try osimage.jsonStringify(&osimage.Hurd, &osHurdBuf.writer);
 
     // Illumos
-    var osIllumosBuf: std.ArrayList(u8) = .{};
-    defer osIllumosBuf.deinit(testing.allocator);
+    var osIllumosBuf: std.Io.Writer.Allocating = .init(allocator);
+    defer osIllumosBuf.deinit();
 
-    try osimage.jsonStringify(&osimage.Illumos, osIllumosBuf.writer(testing.allocator));
+    try osimage.jsonStringify(&osimage.Illumos, &osIllumosBuf.writer);
 
     // IOS
-    var osIOSBuf: std.ArrayList(u8) = .{};
-    defer osIOSBuf.deinit(testing.allocator);
+    var osIOSBuf: std.Io.Writer.Allocating = .init(allocator);
+    defer osIOSBuf.deinit();
 
-    try osimage.jsonStringify(&osimage.IOS, osIOSBuf.writer(testing.allocator));
+    try osimage.jsonStringify(&osimage.IOS, &osIOSBuf.writer);
 
     // Js
-    var osJsBuf: std.ArrayList(u8) = .{};
-    defer osJsBuf.deinit(testing.allocator);
+    var osJsBuf: std.Io.Writer.Allocating = .init(allocator);
+    defer osJsBuf.deinit();
 
-    try osimage.jsonStringify(&osimage.Js, osJsBuf.writer(testing.allocator));
+    try osimage.jsonStringify(&osimage.Js, &osJsBuf.writer);
 
     // Linux
-    var osLinuxBuf: std.ArrayList(u8) = .{};
-    defer osLinuxBuf.deinit(testing.allocator);
+    var osLinuxBuf: std.Io.Writer.Allocating = .init(allocator);
+    defer osLinuxBuf.deinit();
 
-    try osimage.jsonStringify(&osimage.Linux, osLinuxBuf.writer(testing.allocator));
+    try osimage.jsonStringify(&osimage.Linux, &osLinuxBuf.writer);
 
     // Nacl
-    var osNaclBuf: std.ArrayList(u8) = .{};
-    defer osNaclBuf.deinit(testing.allocator);
+    var osNaclBuf: std.Io.Writer.Allocating = .init(allocator);
+    defer osNaclBuf.deinit();
 
-    try osimage.jsonStringify(&osimage.Nacl, osNaclBuf.writer(testing.allocator));
+    try osimage.jsonStringify(&osimage.Nacl, &osNaclBuf.writer);
 
     // NetBSD
-    var osNetBSDBuf: std.ArrayList(u8) = .{};
-    defer osNetBSDBuf.deinit(testing.allocator);
+    var osNetBSDBuf: std.Io.Writer.Allocating = .init(allocator);
+    defer osNetBSDBuf.deinit();
 
-    try osimage.jsonStringify(&osimage.NetBSD, osNetBSDBuf.writer(testing.allocator));
+    try osimage.jsonStringify(&osimage.NetBSD, &osNetBSDBuf.writer);
 
     // OpenBSD
-    var osOpenBSDBuf: std.ArrayList(u8) = .{};
-    defer osOpenBSDBuf.deinit(testing.allocator);
+    var osOpenBSDBuf: std.Io.Writer.Allocating = .init(allocator);
+    defer osOpenBSDBuf.deinit();
 
-    try osimage.jsonStringify(&osimage.OpenBSD, osOpenBSDBuf.writer(testing.allocator));
+    try osimage.jsonStringify(&osimage.OpenBSD, &osOpenBSDBuf.writer);
 
     // Plan9
-    var osPlan9Buf: std.ArrayList(u8) = .{};
-    defer osPlan9Buf.deinit(testing.allocator);
+    var osPlan9Buf: std.Io.Writer.Allocating = .init(allocator);
+    defer osPlan9Buf.deinit();
 
-    try osimage.jsonStringify(&osimage.Plan9, osPlan9Buf.writer(testing.allocator));
+    try osimage.jsonStringify(&osimage.Plan9, &osPlan9Buf.writer);
 
     // Solaris
-    var osSolarisBuf: std.ArrayList(u8) = .{};
-    defer osSolarisBuf.deinit(testing.allocator);
+    var osSolarisBuf: std.Io.Writer.Allocating = .init(allocator);
+    defer osSolarisBuf.deinit();
 
-    try osimage.jsonStringify(&osimage.Solaris, osSolarisBuf.writer(testing.allocator));
+    try osimage.jsonStringify(&osimage.Solaris, &osSolarisBuf.writer);
 
     // Windows
-    var osWindowsBuf: std.ArrayList(u8) = .{};
-    defer osWindowsBuf.deinit(testing.allocator);
+    var osWindowsBuf: std.Io.Writer.Allocating = .init(allocator);
+    defer osWindowsBuf.deinit();
 
-    try osimage.jsonStringify(&osimage.Windows, osWindowsBuf.writer(testing.allocator));
+    try osimage.jsonStringify(&osimage.Windows, &osWindowsBuf.writer);
 
     // ZOS
-    var osZOSBuf: std.ArrayList(u8) = .{};
-    defer osZOSBuf.deinit(testing.allocator);
+    var osZOSBuf: std.Io.Writer.Allocating = .init(allocator);
+    defer osZOSBuf.deinit();
 
-    try osimage.jsonStringify(&osimage.ZOS, osZOSBuf.writer(testing.allocator));
+    try osimage.jsonStringify(&osimage.ZOS, &osZOSBuf.writer);
 
     // Other
-    var osOtherBuf: std.ArrayList(u8) = .{};
-    defer osOtherBuf.deinit(testing.allocator);
+    var osOtherBuf: std.Io.Writer.Allocating = .init(allocator);
+    defer osOtherBuf.deinit();
 
-    try osimage.jsonStringify(&osimage.Other, osOtherBuf.writer(testing.allocator));
+    try osimage.jsonStringify(&osimage.Other, &osOtherBuf.writer);
 
     // test
-    try testing.expectEqualStrings(osAIXBuf.items, "\"aix\"");
-    try testing.expectEqualStrings(osAndroidBuf.items, "\"android\"");
-    try testing.expectEqualStrings(osDarwinBuf.items, "\"darwin\"");
-    try testing.expectEqualStrings(osDragonflyBuf.items, "\"dragonfly\"");
-    try testing.expectEqualStrings(osFreeBSDBuf.items, "\"freebsd\"");
-    try testing.expectEqualStrings(osHurdBuf.items, "\"hurd\"");
-    try testing.expectEqualStrings(osIllumosBuf.items, "\"illumos\"");
-    try testing.expectEqualStrings(osIOSBuf.items, "\"ios\"");
-    try testing.expectEqualStrings(osJsBuf.items, "\"js\"");
-    try testing.expectEqualStrings(osLinuxBuf.items, "\"linux\"");
-    try testing.expectEqualStrings(osNaclBuf.items, "\"nacl\"");
-    try testing.expectEqualStrings(osNetBSDBuf.items, "\"netbsd\"");
-    try testing.expectEqualStrings(osOpenBSDBuf.items, "\"openbsd\"");
-    try testing.expectEqualStrings(osPlan9Buf.items, "\"plan9\"");
-    try testing.expectEqualStrings(osSolarisBuf.items, "\"solaris\"");
-    try testing.expectEqualStrings(osWindowsBuf.items, "\"windows\"");
-    try testing.expectEqualStrings(osZOSBuf.items, "\"zos\"");
-    try testing.expectEqualStrings(osOtherBuf.items, "\"other\"");
+    try testing.expectEqualStrings(osAIXBuf.toArrayList().items, "\"aix\"");
+    try testing.expectEqualStrings(osAndroidBuf.toArrayList().items, "\"android\"");
+    try testing.expectEqualStrings(osDarwinBuf.toArrayList().items, "\"darwin\"");
+    try testing.expectEqualStrings(osDragonflyBuf.toArrayList().items, "\"dragonfly\"");
+    try testing.expectEqualStrings(osFreeBSDBuf.toArrayList().items, "\"freebsd\"");
+    try testing.expectEqualStrings(osHurdBuf.toArrayList().items, "\"hurd\"");
+    try testing.expectEqualStrings(osIllumosBuf.toArrayList().items, "\"illumos\"");
+    try testing.expectEqualStrings(osIOSBuf.toArrayList().items, "\"ios\"");
+    try testing.expectEqualStrings(osJsBuf.toArrayList().items, "\"js\"");
+    try testing.expectEqualStrings(osLinuxBuf.toArrayList().items, "\"linux\"");
+    try testing.expectEqualStrings(osNaclBuf.toArrayList().items, "\"nacl\"");
+    try testing.expectEqualStrings(osNetBSDBuf.toArrayList().items, "\"netbsd\"");
+    try testing.expectEqualStrings(osOpenBSDBuf.toArrayList().items, "\"openbsd\"");
+    try testing.expectEqualStrings(osPlan9Buf.toArrayList().items, "\"plan9\"");
+    try testing.expectEqualStrings(osSolarisBuf.toArrayList().items, "\"solaris\"");
+    try testing.expectEqualStrings(osWindowsBuf.toArrayList().items, "\"windows\"");
+    try testing.expectEqualStrings(osZOSBuf.toArrayList().items, "\"zos\"");
+    try testing.expectEqualStrings(osOtherBuf.toArrayList().items, "\"other\"");
 }
 
 test "image define OS jsonParse" {

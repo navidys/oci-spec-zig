@@ -5,181 +5,181 @@ const testing = std.testing;
 
 test "image define Arch jsonStringify" {
     // I386
-    var archI386Buf: std.ArrayList(u8) = .{};
-    defer archI386Buf.deinit(testing.allocator);
+    var archI386Buf: std.Io.Writer.Allocating = .init(testing.allocator);
+    defer archI386Buf.deinit();
 
-    try arch.jsonStringify(&arch.I386, archI386Buf.writer(testing.allocator));
+    try arch.jsonStringify(&arch.I386, &archI386Buf.writer);
 
     // Amd64
-    var archAmd64Buf: std.ArrayList(u8) = .{};
-    defer archAmd64Buf.deinit(testing.allocator);
+    var archAmd64Buf: std.Io.Writer.Allocating = .init(testing.allocator);
+    defer archAmd64Buf.deinit();
 
-    try arch.jsonStringify(&arch.Amd64, archAmd64Buf.writer(testing.allocator));
+    try arch.jsonStringify(&arch.Amd64, &archAmd64Buf.writer);
 
     // Amd64p32
-    var archAmd64p32Buf: std.ArrayList(u8) = .{};
-    defer archAmd64p32Buf.deinit(testing.allocator);
+    var archAmd64p32Buf: std.Io.Writer.Allocating = .init(testing.allocator);
+    defer archAmd64p32Buf.deinit();
 
-    try arch.jsonStringify(&arch.Amd64p32, archAmd64p32Buf.writer(testing.allocator));
+    try arch.jsonStringify(&arch.Amd64p32, &archAmd64p32Buf.writer);
 
     // ARM
-    var archARMBuf: std.ArrayList(u8) = .{};
-    defer archARMBuf.deinit(testing.allocator);
+    var archARMBuf: std.Io.Writer.Allocating = .init(testing.allocator);
+    defer archARMBuf.deinit();
 
-    try arch.jsonStringify(&arch.ARM, archARMBuf.writer(testing.allocator));
+    try arch.jsonStringify(&arch.ARM, &archARMBuf.writer);
 
     // ARMbe
-    var archARMbeBuf: std.ArrayList(u8) = .{};
-    defer archARMbeBuf.deinit(testing.allocator);
+    var archARMbeBuf: std.Io.Writer.Allocating = .init(testing.allocator);
+    defer archARMbeBuf.deinit();
 
-    try arch.jsonStringify(&arch.ARMbe, archARMbeBuf.writer(testing.allocator));
+    try arch.jsonStringify(&arch.ARMbe, &archARMbeBuf.writer);
 
     // ARM64
-    var archARM64Buf: std.ArrayList(u8) = .{};
-    defer archARM64Buf.deinit(testing.allocator);
+    var archARM64Buf: std.Io.Writer.Allocating = .init(testing.allocator);
+    defer archARM64Buf.deinit();
 
-    try arch.jsonStringify(&arch.ARM64, archARM64Buf.writer(testing.allocator));
+    try arch.jsonStringify(&arch.ARM64, &archARM64Buf.writer);
 
     // ARM64be
-    var archARM64beBuf: std.ArrayList(u8) = .{};
-    defer archARM64beBuf.deinit(testing.allocator);
+    var archARM64beBuf: std.Io.Writer.Allocating = .init(testing.allocator);
+    defer archARM64beBuf.deinit();
 
-    try arch.jsonStringify(&arch.ARM64be, archARM64beBuf.writer(testing.allocator));
+    try arch.jsonStringify(&arch.ARM64be, &archARM64beBuf.writer);
 
     // LoongArch64
-    var archLoongArch64Buf: std.ArrayList(u8) = .{};
-    defer archLoongArch64Buf.deinit(testing.allocator);
+    var archLoongArch64Buf: std.Io.Writer.Allocating = .init(testing.allocator);
+    defer archLoongArch64Buf.deinit();
 
-    try arch.jsonStringify(&arch.LoongArch64, archLoongArch64Buf.writer(testing.allocator));
+    try arch.jsonStringify(&arch.LoongArch64, &archLoongArch64Buf.writer);
 
     // Mips
-    var archMipsBuf: std.ArrayList(u8) = .{};
-    defer archMipsBuf.deinit(testing.allocator);
+    var archMipsBuf: std.Io.Writer.Allocating = .init(testing.allocator);
+    defer archMipsBuf.deinit();
 
-    try arch.jsonStringify(&arch.Mips, archMipsBuf.writer(testing.allocator));
+    try arch.jsonStringify(&arch.Mips, &archMipsBuf.writer);
 
     // Mipsle
-    var archMipsleBuf: std.ArrayList(u8) = .{};
-    defer archMipsleBuf.deinit(testing.allocator);
+    var archMipsleBuf: std.Io.Writer.Allocating = .init(testing.allocator);
+    defer archMipsleBuf.deinit();
 
-    try arch.jsonStringify(&arch.Mipsle, archMipsleBuf.writer(testing.allocator));
+    try arch.jsonStringify(&arch.Mipsle, &archMipsleBuf.writer);
 
     // Mips64
-    var archMips64Buf: std.ArrayList(u8) = .{};
-    defer archMips64Buf.deinit(testing.allocator);
+    var archMips64Buf: std.Io.Writer.Allocating = .init(testing.allocator);
+    defer archMips64Buf.deinit();
 
-    try arch.jsonStringify(&arch.Mips64, archMips64Buf.writer(testing.allocator));
+    try arch.jsonStringify(&arch.Mips64, &archMips64Buf.writer);
 
     // Mips64le
-    var archMips64leBuf: std.ArrayList(u8) = .{};
-    defer archMips64leBuf.deinit(testing.allocator);
+    var archMips64leBuf: std.Io.Writer.Allocating = .init(testing.allocator);
+    defer archMips64leBuf.deinit();
 
-    try arch.jsonStringify(&arch.Mips64le, archMips64leBuf.writer(testing.allocator));
+    try arch.jsonStringify(&arch.Mips64le, &archMips64leBuf.writer);
 
     // Mips64p32
-    var archMips64p32Buf: std.ArrayList(u8) = .{};
-    defer archMips64p32Buf.deinit(testing.allocator);
+    var archMips64p32Buf: std.Io.Writer.Allocating = .init(testing.allocator);
+    defer archMips64p32Buf.deinit();
 
-    try arch.jsonStringify(&arch.Mips64p32, archMips64p32Buf.writer(testing.allocator));
+    try arch.jsonStringify(&arch.Mips64p32, &archMips64p32Buf.writer);
 
     // Mips64p32le
-    var archMips64p32leBuf: std.ArrayList(u8) = .{};
-    defer archMips64p32leBuf.deinit(testing.allocator);
+    var archMips64p32leBuf: std.Io.Writer.Allocating = .init(testing.allocator);
+    defer archMips64p32leBuf.deinit();
 
-    try arch.jsonStringify(&arch.Mips64p32le, archMips64p32leBuf.writer(testing.allocator));
+    try arch.jsonStringify(&arch.Mips64p32le, &archMips64p32leBuf.writer);
 
     // PowerPC
-    var archPowerPCBuf: std.ArrayList(u8) = .{};
-    defer archPowerPCBuf.deinit(testing.allocator);
+    var archPowerPCBuf: std.Io.Writer.Allocating = .init(testing.allocator);
+    defer archPowerPCBuf.deinit();
 
-    try arch.jsonStringify(&arch.PowerPC, archPowerPCBuf.writer(testing.allocator));
+    try arch.jsonStringify(&arch.PowerPC, &archPowerPCBuf.writer);
 
     // PowerPC64
-    var archPowerPC64Buf: std.ArrayList(u8) = .{};
-    defer archPowerPC64Buf.deinit(testing.allocator);
+    var archPowerPC64Buf: std.Io.Writer.Allocating = .init(testing.allocator);
+    defer archPowerPC64Buf.deinit();
 
-    try arch.jsonStringify(&arch.PowerPC64, archPowerPC64Buf.writer(testing.allocator));
+    try arch.jsonStringify(&arch.PowerPC64, &archPowerPC64Buf.writer);
 
     // PowerPC64le
-    var archPowerPC64leBuf: std.ArrayList(u8) = .{};
-    defer archPowerPC64leBuf.deinit(testing.allocator);
+    var archPowerPC64leBuf: std.Io.Writer.Allocating = .init(testing.allocator);
+    defer archPowerPC64leBuf.deinit();
 
-    try arch.jsonStringify(&arch.PowerPC64le, archPowerPC64leBuf.writer(testing.allocator));
+    try arch.jsonStringify(&arch.PowerPC64le, &archPowerPC64leBuf.writer);
 
     // RISCV
-    var archRISCVBuf: std.ArrayList(u8) = .{};
-    defer archRISCVBuf.deinit(testing.allocator);
+    var archRISCVBuf: std.Io.Writer.Allocating = .init(testing.allocator);
+    defer archRISCVBuf.deinit();
 
-    try arch.jsonStringify(&arch.RISCV, archRISCVBuf.writer(testing.allocator));
+    try arch.jsonStringify(&arch.RISCV, &archRISCVBuf.writer);
 
     // RISCV64
-    var archRISCV64Buf: std.ArrayList(u8) = .{};
-    defer archRISCV64Buf.deinit(testing.allocator);
+    var archRISCV64Buf: std.Io.Writer.Allocating = .init(testing.allocator);
+    defer archRISCV64Buf.deinit();
 
-    try arch.jsonStringify(&arch.RISCV64, archRISCV64Buf.writer(testing.allocator));
+    try arch.jsonStringify(&arch.RISCV64, &archRISCV64Buf.writer);
 
     // S390
-    var archS390Buf: std.ArrayList(u8) = .{};
-    defer archS390Buf.deinit(testing.allocator);
+    var archS390Buf: std.Io.Writer.Allocating = .init(testing.allocator);
+    defer archS390Buf.deinit();
 
-    try arch.jsonStringify(&arch.S390, archS390Buf.writer(testing.allocator));
+    try arch.jsonStringify(&arch.S390, &archS390Buf.writer);
 
     // S390x
-    var archS390xBuf: std.ArrayList(u8) = .{};
-    defer archS390xBuf.deinit(testing.allocator);
+    var archS390xBuf: std.Io.Writer.Allocating = .init(testing.allocator);
+    defer archS390xBuf.deinit();
 
-    try arch.jsonStringify(&arch.S390x, archS390xBuf.writer(testing.allocator));
+    try arch.jsonStringify(&arch.S390x, &archS390xBuf.writer);
 
     // SPARC
-    var archSPARCBuf: std.ArrayList(u8) = .{};
-    defer archSPARCBuf.deinit(testing.allocator);
+    var archSPARCBuf: std.Io.Writer.Allocating = .init(testing.allocator);
+    defer archSPARCBuf.deinit();
 
-    try arch.jsonStringify(&arch.SPARC, archSPARCBuf.writer(testing.allocator));
+    try arch.jsonStringify(&arch.SPARC, &archSPARCBuf.writer);
 
     // SPARC64
-    var archSPARC64Buf: std.ArrayList(u8) = .{};
-    defer archSPARC64Buf.deinit(testing.allocator);
+    var archSPARC64Buf: std.Io.Writer.Allocating = .init(testing.allocator);
+    defer archSPARC64Buf.deinit();
 
-    try arch.jsonStringify(&arch.SPARC64, archSPARC64Buf.writer(testing.allocator));
+    try arch.jsonStringify(&arch.SPARC64, &archSPARC64Buf.writer);
 
     // Wasm
-    var archWasmBuf: std.ArrayList(u8) = .{};
-    defer archWasmBuf.deinit(testing.allocator);
+    var archWasmBuf: std.Io.Writer.Allocating = .init(testing.allocator);
+    defer archWasmBuf.deinit();
 
-    try arch.jsonStringify(&arch.Wasm, archWasmBuf.writer(testing.allocator));
+    try arch.jsonStringify(&arch.Wasm, &archWasmBuf.writer);
 
     // Other
-    var archOtherBuf: std.ArrayList(u8) = .{};
-    defer archOtherBuf.deinit(testing.allocator);
+    var archOtherBuf: std.Io.Writer.Allocating = .init(testing.allocator);
+    defer archOtherBuf.deinit();
 
-    try arch.jsonStringify(&arch.Other, archOtherBuf.writer(testing.allocator));
+    try arch.jsonStringify(&arch.Other, &archOtherBuf.writer);
 
     // test
-    try testing.expectEqualStrings(archI386Buf.items, "\"386\"");
-    try testing.expectEqualStrings(archAmd64Buf.items, "\"amd64\"");
-    try testing.expectEqualStrings(archAmd64p32Buf.items, "\"amd64p32\"");
-    try testing.expectEqualStrings(archARMBuf.items, "\"arm\"");
-    try testing.expectEqualStrings(archARMbeBuf.items, "\"armbe\"");
-    try testing.expectEqualStrings(archARM64Buf.items, "\"arm64\"");
-    try testing.expectEqualStrings(archARM64beBuf.items, "\"arm64be\"");
-    try testing.expectEqualStrings(archLoongArch64Buf.items, "\"loong64\"");
-    try testing.expectEqualStrings(archMipsBuf.items, "\"mips\"");
-    try testing.expectEqualStrings(archMipsleBuf.items, "\"mipsle\"");
-    try testing.expectEqualStrings(archMips64Buf.items, "\"mips64\"");
-    try testing.expectEqualStrings(archMips64leBuf.items, "\"mips64le\"");
-    try testing.expectEqualStrings(archMips64p32Buf.items, "\"mips64p32\"");
-    try testing.expectEqualStrings(archMips64p32leBuf.items, "\"mips64p32le\"");
-    try testing.expectEqualStrings(archPowerPCBuf.items, "\"ppc\"");
-    try testing.expectEqualStrings(archPowerPC64Buf.items, "\"ppc64\"");
-    try testing.expectEqualStrings(archPowerPC64leBuf.items, "\"ppc64le\"");
-    try testing.expectEqualStrings(archRISCVBuf.items, "\"riscv\"");
-    try testing.expectEqualStrings(archRISCV64Buf.items, "\"riscv64\"");
-    try testing.expectEqualStrings(archS390Buf.items, "\"s390\"");
-    try testing.expectEqualStrings(archS390xBuf.items, "\"s390x\"");
-    try testing.expectEqualStrings(archSPARCBuf.items, "\"sparc\"");
-    try testing.expectEqualStrings(archSPARC64Buf.items, "\"sparc64\"");
-    try testing.expectEqualStrings(archWasmBuf.items, "\"wasm\"");
-    try testing.expectEqualStrings(archOtherBuf.items, "\"other\"");
+    try testing.expectEqualStrings(archI386Buf.written(), "\"386\"");
+    try testing.expectEqualStrings(archAmd64Buf.written(), "\"amd64\"");
+    try testing.expectEqualStrings(archAmd64p32Buf.written(), "\"amd64p32\"");
+    try testing.expectEqualStrings(archARMBuf.written(), "\"arm\"");
+    try testing.expectEqualStrings(archARMbeBuf.written(), "\"armbe\"");
+    try testing.expectEqualStrings(archARM64Buf.written(), "\"arm64\"");
+    try testing.expectEqualStrings(archARM64beBuf.written(), "\"arm64be\"");
+    try testing.expectEqualStrings(archLoongArch64Buf.written(), "\"loong64\"");
+    try testing.expectEqualStrings(archMipsBuf.written(), "\"mips\"");
+    try testing.expectEqualStrings(archMipsleBuf.written(), "\"mipsle\"");
+    try testing.expectEqualStrings(archMips64Buf.written(), "\"mips64\"");
+    try testing.expectEqualStrings(archMips64leBuf.written(), "\"mips64le\"");
+    try testing.expectEqualStrings(archMips64p32Buf.written(), "\"mips64p32\"");
+    try testing.expectEqualStrings(archMips64p32leBuf.written(), "\"mips64p32le\"");
+    try testing.expectEqualStrings(archPowerPCBuf.written(), "\"ppc\"");
+    try testing.expectEqualStrings(archPowerPC64Buf.written(), "\"ppc64\"");
+    try testing.expectEqualStrings(archPowerPC64leBuf.written(), "\"ppc64le\"");
+    try testing.expectEqualStrings(archRISCVBuf.written(), "\"riscv\"");
+    try testing.expectEqualStrings(archRISCV64Buf.written(), "\"riscv64\"");
+    try testing.expectEqualStrings(archS390Buf.written(), "\"s390\"");
+    try testing.expectEqualStrings(archS390xBuf.written(), "\"s390x\"");
+    try testing.expectEqualStrings(archSPARCBuf.written(), "\"sparc\"");
+    try testing.expectEqualStrings(archSPARC64Buf.written(), "\"sparc64\"");
+    try testing.expectEqualStrings(archWasmBuf.written(), "\"wasm\"");
+    try testing.expectEqualStrings(archOtherBuf.written(), "\"other\"");
 }
 
 test "image define Arch jsonParse" {

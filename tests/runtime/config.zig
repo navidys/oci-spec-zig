@@ -17,6 +17,7 @@ test "runtime config" {
         &.{ "./tests/fixtures/", ruuntimeFile },
     );
     const spec = try runtime.Spec.initFromFile(allocator, ruuntimeFile_path);
+    defer spec.deinit();
 
-    try testing.expectEqualStrings(spec.ociVersion, "0.5.0-dev");
+    try testing.expectEqualStrings(spec.value.ociVersion, "0.5.0-dev");
 }

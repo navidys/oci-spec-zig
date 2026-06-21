@@ -97,8 +97,9 @@ pub const Spec = struct {
     /// VM specifies configuration for Virtual Machine based containers.
     vm: ?vm.VM = null,
 
-    pub fn initFromFile(allocator: Allocator, file_path: []const u8) !Spec {
+    pub fn initFromFile(allocator: Allocator, file_path: []const u8) !std.json.Parsed(Spec) {
         const content = try utils.readFileContent(allocator, file_path);
+        defer allocator.free(content);
 
         const parsed = try std.json.parseFromSlice(
             Spec,
@@ -107,7 +108,7 @@ pub const Spec = struct {
             .{ .allocate = .alloc_always, .ignore_unknown_fields = true },
         );
 
-        return parsed.value;
+        return parsed;
     }
 
     /// Attempts to write an image configuration to a string as JSON.

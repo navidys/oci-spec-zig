@@ -58,8 +58,9 @@ pub const Manifest = struct {
     annotations: ?std.json.ArrayHashMap([]const u8) = null,
 
     /// Attempts to load the image manifest from file.
-    pub fn initFromFile(allocator: Allocator, file_path: []const u8) !Manifest {
+    pub fn initFromFile(allocator: Allocator, file_path: []const u8) !std.json.Parsed(Manifest) {
         const content = try utils.readFileContent(allocator, file_path);
+        defer allocator.free(content);
 
         const parsed = try std.json.parseFromSlice(
             Manifest,
@@ -68,7 +69,7 @@ pub const Manifest = struct {
             .{ .allocate = .alloc_always, .ignore_unknown_fields = true },
         );
 
-        return parsed.value;
+        return parsed;
     }
 
     /// Attempts to write the image manifest to a string as JSON.
