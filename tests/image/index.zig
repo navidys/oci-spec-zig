@@ -5,10 +5,7 @@ const image = ocispec.image;
 const testing = std.testing;
 
 test "image index" {
-    var arena = std.heap.ArenaAllocator.init(std.heap.page_allocator);
-    defer arena.deinit();
-
-    const allocator = arena.allocator();
+    const allocator = testing.allocator;
 
     const index_filename = "index.json";
     const index1_file_path = try std.mem.concat(
@@ -16,11 +13,16 @@ test "image index" {
         u8,
         &.{ "./tests/fixtures/", index_filename },
     );
-    const index1 = try image.Index.initFromFile(allocator, index1_file_path);
-    const index1_manifest = index1.manifests;
 
-    try testing.expectEqual(index1.schemaVersion, 2);
-    try testing.expectEqual(index1.mediaType, image.MediaType.ImageIndex);
+    defer allocator.free(index1_file_path);
+
+    const index1 = try image.Index.initFromFile(allocator, index1_file_path);
+    defer index1.deinit();
+
+    const index1_manifest = index1.value.manifests;
+
+    try testing.expectEqual(index1.value.schemaVersion, 2);
+    try testing.expectEqual(index1.value.mediaType, image.MediaType.ImageIndex);
     try testing.expectEqual(index1_manifest.len, 2);
     try testing.expectEqual(index1_manifest[0].mediaType, image.MediaType.ImageManifest);
     try testing.expectEqual(index1_manifest[0].size, 7143);
@@ -30,7 +32,8 @@ test "image index" {
     try testing.expectEqual(index1_manifest[0].platform.?.os, image.OS.Linux);
 
     // try to write json pretty to new file and compare to original file
-    const index1_string_pretty = try index1.toStringPretty(allocator);
+    const index1_string_pretty = try index1.value.toStringPretty(allocator);
+    defer allocator.free(index1_string_pretty);
 
     const index2_file_path = try std.mem.concat(
         allocator,
@@ -38,16 +41,20 @@ test "image index" {
         &.{ utils.TEST_DATA_DIR, "/", index_filename },
     );
 
+    defer allocator.free(index2_file_path);
+
     try utils.writeFileContent(index2_file_path, index1_string_pretty);
 
-    const index1_file = try std.fs.cwd().openFile(index1_file_path, .{});
-    defer index1_file.close();
+    var cwd = std.Io.Dir.cwd();
 
-    const index2_file = try std.fs.cwd().openFile(index2_file_path, .{});
-    defer index2_file.close();
+    const index1_file = try cwd.openFile(testing.io, index1_file_path, .{});
+    defer index1_file.close(testing.io);
 
-    const index1_file_stat = try index1_file.stat();
-    const index2_file_stat = try index2_file.stat();
+    const index2_file = try cwd.openFile(testing.io, index2_file_path, .{});
+    defer index2_file.close(testing.io);
+
+    const index1_file_stat = try index1_file.stat(testing.io);
+    const index2_file_stat = try index2_file.stat(testing.io);
 
     try testing.expectEqual(index1_file_stat.size, index2_file_stat.size + 1);
 }

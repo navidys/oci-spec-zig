@@ -36,8 +36,9 @@ pub const ArtifactManifest = struct {
     annotations: ?std.json.ArrayHashMap([]const u8) = null,
 
     /// Attempts to load the artifact manifest from file.
-    pub fn initFromFile(allocator: Allocator, file_path: []const u8) !ArtifactManifest {
+    pub fn initFromFile(allocator: Allocator, file_path: []const u8) !std.json.Parsed(ArtifactManifest) {
         const content = try utils.readFileContent(allocator, file_path);
+        defer allocator.free(content);
 
         const parsed = try std.json.parseFromSlice(
             ArtifactManifest,
@@ -46,7 +47,7 @@ pub const ArtifactManifest = struct {
             .{ .allocate = .alloc_always, .ignore_unknown_fields = true },
         );
 
-        return parsed.value;
+        return parsed;
     }
 
     /// Attempts to write the artifact manifest to a string as JSON.

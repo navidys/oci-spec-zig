@@ -219,102 +219,102 @@ test "image define OS jsonParse" {
 
 test "image define MediaType jsonStringify" {
     // Descriptor
-    var bufDesc: std.ArrayList(u8) = .{};
-    defer bufDesc.deinit(testing.allocator);
+    var bufDesc: std.Io.Writer.Allocating = .init(testing.allocator);
+    defer bufDesc.deinit();
 
-    try imgtype.jsonStringify(&imgtype.Descriptor, bufDesc.writer(testing.allocator));
+    try imgtype.jsonStringify(&imgtype.Descriptor, &bufDesc.writer);
 
     // LayoutHeader
-    var bufLayoutHeader: std.ArrayList(u8) = .{};
-    defer bufLayoutHeader.deinit(testing.allocator);
+    var bufLayoutHeader: std.Io.Writer.Allocating = .init(testing.allocator);
+    defer bufLayoutHeader.deinit();
 
-    try imgtype.jsonStringify(&imgtype.LayoutHeader, bufLayoutHeader.writer(testing.allocator));
+    try imgtype.jsonStringify(&imgtype.LayoutHeader, &bufLayoutHeader.writer);
 
     // ImageManifest
-    var bugImgManifest: std.ArrayList(u8) = .{};
-    defer bugImgManifest.deinit(testing.allocator);
+    var bugImgManifest: std.Io.Writer.Allocating = .init(testing.allocator);
+    defer bugImgManifest.deinit();
 
-    try imgtype.jsonStringify(&imgtype.ImageManifest, bugImgManifest.writer(testing.allocator));
+    try imgtype.jsonStringify(&imgtype.ImageManifest, &bugImgManifest.writer);
 
     // ImageIndex
-    var bufImgIndex: std.ArrayList(u8) = .{};
-    defer bufImgIndex.deinit(testing.allocator);
+    var bufImgIndex: std.Io.Writer.Allocating = .init(testing.allocator);
+    defer bufImgIndex.deinit();
 
-    try imgtype.jsonStringify(&imgtype.ImageIndex, bufImgIndex.writer(testing.allocator));
+    try imgtype.jsonStringify(&imgtype.ImageIndex, &bufImgIndex.writer);
 
     // ImageLayer
-    var bufImgLayer: std.ArrayList(u8) = .{};
-    defer bufImgLayer.deinit(testing.allocator);
+    var bufImgLayer: std.Io.Writer.Allocating = .init(testing.allocator);
+    defer bufImgLayer.deinit();
 
-    try imgtype.jsonStringify(&imgtype.ImageLayer, bufImgLayer.writer(testing.allocator));
+    try imgtype.jsonStringify(&imgtype.ImageLayer, &bufImgLayer.writer);
 
     // ImageLayerGzip
-    var bugImgLayerGzip: std.ArrayList(u8) = .{};
-    defer bugImgLayerGzip.deinit(testing.allocator);
+    var bugImgLayerGzip: std.Io.Writer.Allocating = .init(testing.allocator);
+    defer bugImgLayerGzip.deinit();
 
-    try imgtype.jsonStringify(&imgtype.ImageLayerGzip, bugImgLayerGzip.writer(testing.allocator));
+    try imgtype.jsonStringify(&imgtype.ImageLayerGzip, &bugImgLayerGzip.writer);
 
     // ImageLayerZstd
-    var bufImgLayerZstd: std.ArrayList(u8) = .{};
-    defer bufImgLayerZstd.deinit(testing.allocator);
+    var bufImgLayerZstd: std.Io.Writer.Allocating = .init(testing.allocator);
+    defer bufImgLayerZstd.deinit();
 
-    try imgtype.jsonStringify(&imgtype.ImageLayerZstd, bufImgLayerZstd.writer(testing.allocator));
+    try imgtype.jsonStringify(&imgtype.ImageLayerZstd, &bufImgLayerZstd.writer);
 
     // ImageLayerNonDistributable
-    var bufImgLayerNonDist: std.ArrayList(u8) = .{};
-    defer bufImgLayerNonDist.deinit(testing.allocator);
+    var bufImgLayerNonDist: std.Io.Writer.Allocating = .init(testing.allocator);
+    defer bufImgLayerNonDist.deinit();
 
-    try imgtype.jsonStringify(&imgtype.ImageLayerNonDistributable, bufImgLayerNonDist.writer(testing.allocator));
+    try imgtype.jsonStringify(&imgtype.ImageLayerNonDistributable, &bufImgLayerNonDist.writer);
 
     // ImageLayerNonDistributableGzip
-    var bufImgLayerNonDistGzip: std.ArrayList(u8) = .{};
-    defer bufImgLayerNonDistGzip.deinit(testing.allocator);
+    var bufImgLayerNonDistGzip: std.Io.Writer.Allocating = .init(testing.allocator);
+    defer bufImgLayerNonDistGzip.deinit();
 
-    try imgtype.jsonStringify(&imgtype.ImageLayerNonDistributableGzip, bufImgLayerNonDistGzip.writer(testing.allocator));
+    try imgtype.jsonStringify(&imgtype.ImageLayerNonDistributableGzip, &bufImgLayerNonDistGzip.writer);
 
     // ImageLayerNonDistributableZstd
-    var bufImgLayerNonDistZstd: std.ArrayList(u8) = .{};
-    defer bufImgLayerNonDistZstd.deinit(testing.allocator);
+    var bufImgLayerNonDistZstd: std.Io.Writer.Allocating = .init(testing.allocator);
+    defer bufImgLayerNonDistZstd.deinit();
 
-    try imgtype.jsonStringify(&imgtype.ImageLayerNonDistributableZstd, bufImgLayerNonDistZstd.writer(testing.allocator));
+    try imgtype.jsonStringify(&imgtype.ImageLayerNonDistributableZstd, &bufImgLayerNonDistZstd.writer);
 
     // ImageConfig
-    var bufImgConfig: std.ArrayList(u8) = .{};
-    defer bufImgConfig.deinit(testing.allocator);
+    var bufImgConfig: std.Io.Writer.Allocating = .init(testing.allocator);
+    defer bufImgConfig.deinit();
 
-    try imgtype.jsonStringify(&imgtype.ImageConfig, bufImgConfig.writer(testing.allocator));
+    try imgtype.jsonStringify(&imgtype.ImageConfig, &bufImgConfig.writer);
 
     // ArtifactManifest
-    var bufArtManifest: std.ArrayList(u8) = .{};
-    defer bufArtManifest.deinit(testing.allocator);
+    var bufArtManifest: std.Io.Writer.Allocating = .init(testing.allocator);
+    defer bufArtManifest.deinit();
 
-    try imgtype.jsonStringify(&imgtype.ArtifactManifest, bufArtManifest.writer(testing.allocator));
+    try imgtype.jsonStringify(&imgtype.ArtifactManifest, &bufArtManifest.writer);
 
     // EmptyJSON
-    var bufEmptyJson: std.ArrayList(u8) = .{};
-    defer bufEmptyJson.deinit(testing.allocator);
+    var bufEmptyJson: std.Io.Writer.Allocating = .init(testing.allocator);
+    defer bufEmptyJson.deinit();
 
-    try imgtype.jsonStringify(&imgtype.EmptyJSON, bufEmptyJson.writer(testing.allocator));
+    try imgtype.jsonStringify(&imgtype.EmptyJSON, &bufEmptyJson.writer);
 
     // Other
-    var bufOther: std.ArrayList(u8) = .{};
-    defer bufOther.deinit(testing.allocator);
+    var bufOther: std.Io.Writer.Allocating = .init(testing.allocator);
+    defer bufOther.deinit();
 
-    try imgtype.jsonStringify(&imgtype.Other, bufOther.writer(testing.allocator));
+    try imgtype.jsonStringify(&imgtype.Other, &bufOther.writer);
 
     // test
-    try testing.expectEqualStrings(bufDesc.items, "\"application/vnd.oci.descriptor\"");
-    try testing.expectEqualStrings(bufLayoutHeader.items, "\"application/vnd.oci.layout.header.v1+json\"");
-    try testing.expectEqualStrings(bugImgManifest.items, "\"application/vnd.oci.image.manifest.v1+json\"");
-    try testing.expectEqualStrings(bufImgIndex.items, "\"application/vnd.oci.image.index.v1+json\"");
-    try testing.expectEqualStrings(bufImgLayer.items, "\"application/vnd.oci.image.layer.v1.tar\"");
-    try testing.expectEqualStrings(bugImgLayerGzip.items, "\"application/vnd.oci.image.layer.v1.tar+gzip\"");
-    try testing.expectEqualStrings(bufImgLayerZstd.items, "\"application/vnd.oci.image.layer.v1.tar+zstd\"");
-    try testing.expectEqualStrings(bufImgLayerNonDist.items, "\"application/vnd.oci.image.layer.nondistributable.v1.tar\"");
-    try testing.expectEqualStrings(bufImgLayerNonDistGzip.items, "\"application/vnd.oci.image.layer.nondistributable.v1.tar+gzip\"");
-    try testing.expectEqualStrings(bufImgLayerNonDistZstd.items, "\"application/vnd.oci.image.layer.nondistributable.v1.tar+zstd\"");
-    try testing.expectEqualStrings(bufImgConfig.items, "\"application/vnd.oci.image.config.v1+json\"");
-    try testing.expectEqualStrings(bufArtManifest.items, "\"application/vnd.oci.artifact.manifest.v1+json\"");
-    try testing.expectEqualStrings(bufEmptyJson.items, "\"application/vnd.oci.empty.v1+json\"");
-    try testing.expectEqualStrings(bufOther.items, "\"other\"");
+    try testing.expectEqualStrings(bufDesc.written(), "\"application/vnd.oci.descriptor\"");
+    try testing.expectEqualStrings(bufLayoutHeader.written(), "\"application/vnd.oci.layout.header.v1+json\"");
+    try testing.expectEqualStrings(bugImgManifest.written(), "\"application/vnd.oci.image.manifest.v1+json\"");
+    try testing.expectEqualStrings(bufImgIndex.written(), "\"application/vnd.oci.image.index.v1+json\"");
+    try testing.expectEqualStrings(bufImgLayer.written(), "\"application/vnd.oci.image.layer.v1.tar\"");
+    try testing.expectEqualStrings(bugImgLayerGzip.written(), "\"application/vnd.oci.image.layer.v1.tar+gzip\"");
+    try testing.expectEqualStrings(bufImgLayerZstd.written(), "\"application/vnd.oci.image.layer.v1.tar+zstd\"");
+    try testing.expectEqualStrings(bufImgLayerNonDist.written(), "\"application/vnd.oci.image.layer.nondistributable.v1.tar\"");
+    try testing.expectEqualStrings(bufImgLayerNonDistGzip.written(), "\"application/vnd.oci.image.layer.nondistributable.v1.tar+gzip\"");
+    try testing.expectEqualStrings(bufImgLayerNonDistZstd.written(), "\"application/vnd.oci.image.layer.nondistributable.v1.tar+zstd\"");
+    try testing.expectEqualStrings(bufImgConfig.written(), "\"application/vnd.oci.image.config.v1+json\"");
+    try testing.expectEqualStrings(bufArtManifest.written(), "\"application/vnd.oci.artifact.manifest.v1+json\"");
+    try testing.expectEqualStrings(bufEmptyJson.written(), "\"application/vnd.oci.empty.v1+json\"");
+    try testing.expectEqualStrings(bufOther.written(), "\"other\"");
 }

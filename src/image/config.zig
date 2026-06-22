@@ -63,8 +63,9 @@ pub const ImageConfiguration = struct {
     history: ?[]const History = null,
 
     /// Attempts to load the image configuration from file.
-    pub fn initFromFile(allocator: Allocator, file_path: []const u8) !ImageConfiguration {
+    pub fn initFromFile(allocator: Allocator, file_path: []const u8) !std.json.Parsed(ImageConfiguration) {
         const content = try utils.readFileContent(allocator, file_path);
+        defer allocator.free(content);
 
         const parsed = try std.json.parseFromSlice(
             ImageConfiguration,
@@ -73,7 +74,7 @@ pub const ImageConfiguration = struct {
             .{ .allocate = .alloc_always, .ignore_unknown_fields = true },
         );
 
-        return parsed.value;
+        return parsed;
     }
 
     /// Attempts to write the image configuration to a string as JSON.

@@ -1,10 +1,10 @@
 const std = @import("std");
 
-const MIN_ZIG_VERSION = "0.14.1";
+const MIN_ZIG_VERSION = "0.16.0";
 
 pub fn build(b: *std.Build) void {
     if (comptime !checkVersion())
-        @compileError("Please! Update zig toolchain >= 0.14.1!");
+        @compileError("Please! Update zig toolchain >= 0.16.0!");
 
     const target = b.standardTargetOptions(.{});
     const optimize = b.standardOptimizeOption(.{});

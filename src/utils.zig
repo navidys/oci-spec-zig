@@ -4,16 +4,21 @@ const fs = std.fs;
 
 /// reads content of a given file path
 pub fn readFileContent(allocator: Allocator, file_path: []const u8) ![]u8 {
-    const file = try std.fs.cwd().openFile(file_path, fs.File.OpenFlags{ .mode = .read_only });
-    defer file.close();
+    const cwd = std.Io.Dir.cwd();
 
-    const file_size = try file.getEndPos();
+    var writer_thread = std.Io.Threaded.init(allocator, .{});
+    defer writer_thread.deinit();
 
-    const buffer = try allocator.alloc(u8, file_size);
+    const io = writer_thread.io();
 
-    _ = try file.readAll(buffer);
+    const file = try cwd.openFile(io, file_path, .{ .mode = .read_only });
+    defer file.close(io);
 
-    return buffer;
+    var file_reader = file.reader(io, &.{});
+
+    const content = try file_reader.interface.allocRemaining(allocator, .unlimited);
+
+    return content;
 }
 
 pub fn writeFileContent(allocator: Allocator, file_path: []const u8, content: []const u8) !void {
@@ -23,11 +28,17 @@ pub fn writeFileContent(allocator: Allocator, file_path: []const u8, content: []
         &.{ content, "\n" },
     );
 
-    const file = try std.fs.cwd().createFile(file_path, fs.File.CreateFlags{ .read = false });
+    var writer_thread = std.Io.Threaded.init(allocator, .{});
+    defer writer_thread.deinit();
 
-    defer file.close();
+    const io = writer_thread.io();
+    const cwd = std.Io.Dir.cwd();
 
-    _ = try file.writeAll(content_newline);
+    const file = try cwd.createFile(io, file_path, fs.File.CreateFlags{ .read = false });
+
+    defer file.close(io);
+
+    _ = try file.writeStreamingAll(io, content_newline);
 }
 
 pub fn toJsonString(allocator: Allocator, value: anytype, pretty: bool) ![]const u8 {

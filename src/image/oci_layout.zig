@@ -10,8 +10,9 @@ const Allocator = std.mem.Allocator;
 pub const OciLayout = struct {
     imageLayoutVersion: []const u8 = version.VERSION,
 
-    pub fn initFromFile(allocator: Allocator, file_path: []const u8) !OciLayout {
+    pub fn initFromFile(allocator: Allocator, file_path: []const u8) !std.json.Parsed(OciLayout) {
         const content = try utils.readFileContent(allocator, file_path);
+        defer allocator.free(content);
 
         const parsed = try std.json.parseFromSlice(
             OciLayout,
@@ -20,7 +21,7 @@ pub const OciLayout = struct {
             .{ .allocate = .alloc_always, .ignore_unknown_fields = true },
         );
 
-        return parsed.value;
+        return parsed;
     }
 
     /// Attempts to write an image configuration to a string as JSON.
